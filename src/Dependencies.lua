@@ -4,8 +4,10 @@ push = require 'lib/push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'lib/class'
 
+-- https://github.com/karai17/Simple-Tiled-Implementation
 STI  = require 'lib/sti'
 
+-- https://github.com/airstruck/knife
 Timer = require 'lib/knife.timer'
 
 -- game entities
