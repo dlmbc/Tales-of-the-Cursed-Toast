@@ -20,11 +20,11 @@ function Key:load(x, y)
    self.count = 3
    self.countMod = 0.75
 
-   self.physics = {}
-   self.physics.body = love.physics.newBody(World, self.x, self.y, "static")
-   self.physics.shape = love.physics.newRectangleShape(self.width, self.height)
-   self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
-   self.physics.fixture:setSensor(true)
+   self.object = {}
+   self.object.body = love.physics.newBody(World, self.x, self.y, "static")
+   self.object.shape = love.physics.newRectangleShape(self.width, self.height)
+   self.object.fixture = love.physics.newFixture(self.object.body, self.object.shape)
+   self.object.fixture:setSensor(true)
 
    table.insert(ActiveKeys, self)
 end
@@ -32,7 +32,7 @@ end
 function Key:remove()
    for i,instance in ipairs(ActiveKeys) do
       if instance == self then
-         self.physics.body:setActive(false)
+         self.object.body:setActive(false)
          self.destroyed = true
          table.remove(ActiveKeys, i)
       end
@@ -41,7 +41,7 @@ end
 
 function Key.removeAll()
    for i,v in ipairs(ActiveKeys) do
-      v.physics.body:setActive(false)
+      v.object.body:setActive(false)
       self.destroyed = true
    end
 
@@ -83,8 +83,8 @@ end
 
 function Key.beginContact(a, b, collision)
    for i,instance in ipairs(ActiveKeys) do
-      if a == instance.physics.fixture or b == instance.physics.fixture then
-         if a == Player.physics.fixture or b == Player.physics.fixture then
+      if a == instance.object.fixture or b == instance.object.fixture then
+         if a == Player.character.fixture or b == Player.character.fixture then
             instance.toBeRemoved = true
             GUI.isDisplay = true
             return true

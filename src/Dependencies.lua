@@ -39,9 +39,10 @@ require 'src/Util'
 small = love.graphics.newFont('font/font.ttf', 8)
 medium = love.graphics.newFont('font/font.ttf', 16)
 large = love.graphics.newFont('font/font.ttf', 32)
+
 gSounds = {
     tbgm = love.audio.newSource('sounds/music/Aspire.mp3', 'static'),
-    forest = love.audio.newSource('sounds/music/forest.mp3', 'static'),
+    -- forest = love.audio.newSource('sounds/music/forest.mp3', 'static'),
     jump = love.audio.newSource('sounds/SFX/jump.wav', 'static')
 }
 
@@ -53,6 +54,7 @@ gTextures = {
     panel = love.graphics.newImage('graphics/holder.png'),
     logo = love.graphics.newImage('graphics/logo.png'),
     toast = love.graphics.newImage('graphics/toastSprite.png'),
+    slime = love.graphics.newImage('graphics/slime.png'),
     keyLock = love.graphics.newImage('graphics/key_lock.png')
 }
 
@@ -60,6 +62,7 @@ gFrames = {
     arrow = GenerateQuads(gTextures.arrow, 4, 5),
     logo = GenerateQuads(gTextures.logo, 272, 160),
     toast = GenerateQuads(gTextures.toast, 16, 16),
+    slime = GenerateQuads(gTextures.slime, 16, 13),
     key = GenerateQuadsKey(gTextures.keyLock),
     lock = GenerateQuadsLock(gTextures.keyLock)
 }

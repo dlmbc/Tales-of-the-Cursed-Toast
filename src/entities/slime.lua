@@ -7,14 +7,16 @@ function Slime:load(x, y)
    local self = setmetatable({}, Slime)
    self.x = x
    self.y = y
-   self.offsetY = -2
+
+   self.width = 16
+   self.height = 13
 
    self.speed = 100
    self.speedMod = 1
-   self.xVel = self.speed
+   self.dx = self.speed
 
    self.speedCounter = 0
-   self.speedTrigger = 3
+   self.speedTrigger = 2
 
    self.damage = 1
     
@@ -25,42 +27,43 @@ function Slime:load(x, y)
       speed = 3
    }
 
-   self.state = "walk"
+   self.state = 'walk'
 
    self:loadAssets()
 
-   self.physics = {}
-   self.physics.body = love.physics.newBody(World, self.x, self.y, "dynamic")
-   self.physics.body:setFixedRotation(true)
-   self.physics.body:setMass(25)
-   self.physics.shape = love.physics.newRectangleShape(self.width * 0.4, self.height * 0.75)
-   self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
+   self.slime = {}
+   self.slime.body = love.physics.newBody(World, self.x, self.y, 'dynamic')
+   self.slime.body:setFixedRotation(true)
+   self.slime.body:setMass(25)
+   self.slime.shape = love.physics.newRectangleShape(self.width * 0.4, self.height * 0.75)
+   self.slime.fixture = love.physics.newFixture(self.slime.body, self.slime.shape)
     
    table.insert(ActiveSlime, self)
 end
 
 function Slime:loadAssets()
-   self.animation = {timer = 0, rate = 0.1}
-  
-   self.animation.run = {total = 3, current = 1, img = {}}
-   self.animation.walk = {total = 3, current = 1, img = {}}
+   self.animation = {state}
 
-   for i = 1, self.animation.run.total do
-      self.animation.run.img[i] = love.graphics.newImage("graphics/slime/"..i..".png")
-   end
+   self.animation.walk = Animation {
+      frames = {1,2,3},
+      interval = 0.1,
+      width = self.width,
+      height = self.width
+   }
 
-   for i = 1, self.animation.walk.total do
-      self.animation.walk.img[i] = love.graphics.newImage("graphics/slime/"..i..".png")
-   end
-        
-   self.animation.draw = self.animation.walk.img[1]
-   self.width = self.animation.draw:getWidth()
-   self.height = self.animation.draw:getHeight()
+   self.animation.run = Animation {
+      frames = {1,2,3},
+      interval = 0.1,
+      width = self.width,
+      height = self.width
+   }
+
+   self.currentAnimation = self.animation[self.state]
 end
 
 function Slime.removeAll()
    for i,v in ipairs(ActiveSlime) do
-      v.physics.body:destroy()
+      v.slime.body:destroy()
    end
 
    ActiveSlime = {}
@@ -75,11 +78,13 @@ function Slime:increaseSpeed()
    self.speedCounter = self.speedCounter + 1
    if self.speedCounter > self.speedTrigger then
       self:changeColor()
-      self.state = "run"
+      self.state = 'run'
+      self.currentAnimation = self.animation[self.state]
       self.speedMod = 3
       self.speedCounter = 0
    else
-      self.state = "walk"
+      self.state = 'walk'
+      self.currentAnimation = self.animation[self.state]
       self.speedMod = 1
    end
 end
@@ -92,44 +97,29 @@ end
 
 function Slime:update(dt)
     self:syncPhysics()
-    self:animate(dt)
+    self.currentAnimation:update(dt)
     self:normalColor(dt)
  end
 
 function Slime:flipDirection()
-   self.xVel = -self.xVel
-end
-
-function Slime:animate(dt)
-   self.animation.timer = self.animation.timer + dt
-   if self.animation.timer > self.animation.rate then
-      self.animation.timer = 0
-      self:setNewFrame()
-   end
-end
-
-function Slime:setNewFrame()
-   local anim = self.animation[self.state]
-   if anim.current < anim.total then
-      anim.current = anim.current + 1
-   else
-      anim.current = 1
-   end
-   self.animation.draw = anim.img[anim.current]
+   self.dx = -self.dx
 end
 
 function Slime:syncPhysics()
-   self.x, self.y = self.physics.body:getPosition()
-   self.physics.body:setLinearVelocity(self.xVel * self.speedMod, 100)
+   self.x, self.y = self.slime.body:getPosition()
+   self.slime.body:setLinearVelocity(self.dx * self.speedMod, 100)
 end
 
 function Slime:draw()
    local scaleX = 1
-   if self.xVel < 0 then
+   if self.dx < 0 then
       scaleX = -1
    end
    love.graphics.setColor(self.color.blue, self.color.red, self.color.green)
-   love.graphics.draw(self.animation.draw, self.x, self.y, 0, scaleX, 1, self.width / 2, self.height / 2)
+   love.graphics.draw(
+      gTextures.slime, gFrames.slime[self.currentAnimation:getCurrentFrame()],
+      self.x, self.y, 0, scaleX, 1, self.currentAnimation.width/2, self.currentAnimation.height/2
+   )
    love.graphics.setColor(1,1,1,1)
 end
 
@@ -147,12 +137,9 @@ end
 
 function Slime.beginContact(a, b, collision)
    for i,instance in ipairs(ActiveSlime) do
-      if a == instance.physics.fixture or b == instance.physics.fixture then
-         if a == Player.physics.fixture or b == Player.physics.fixture then
+      if a == instance.slime.fixture or b == instance.slime.fixture then
+         if a == Player.character.fixture or b == Player.character.fixture then
             Player:takeDamage(instance.damage)
-         end
-         if a == instance.physics.fixture or b == instance.physics.fixture then
-            instance:increaseSpeed()
          end
          instance:increaseSpeed()
          instance:flipDirection()
