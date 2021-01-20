@@ -45,6 +45,8 @@ function Map:positionCamera(player, camera)
    end
    
    Camera:setPosition(boundX, 0)
+
+   BACKGROUND_SCROLL = (boundX/3) % 384
 end
 
 function Map:next()

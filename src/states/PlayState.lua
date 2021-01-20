@@ -91,7 +91,7 @@ function PlayState:render()
                 love.graphics.setColor(1, 1, 1, 1)
         end
     else
-        love.graphics.draw(Map:backGround())
+        love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
 
         gSounds.tbgm:pause()
         Map.level:draw(-Camera.x)
