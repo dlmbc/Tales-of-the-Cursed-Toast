@@ -8,8 +8,8 @@ return {
   height = 14,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 7,
-  nextobjectid = 84,
+  nextlayerid = 9,
+  nextobjectid = 97,
   properties = {},
   tilesets = {
     {
@@ -76,7 +76,7 @@ return {
       draworder = "topdown",
       id = 6,
       name = "entity",
-      visible = true,
+      visible = false,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
@@ -120,14 +120,144 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 7,
+      name = "object",
+      visible = false,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      objects = {
+        {
+          id = 86,
+          name = "Flag",
+          type = "flag",
+          shape = "rectangle",
+          x = 4768,
+          y = 160,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
         },
         {
-          id = 83,
-          name = "Key",
-          type = "key",
+          id = 87,
+          name = "Breakable",
+          type = "breakable",
           shape = "rectangle",
-          x = 176,
-          y = 128,
+          x = 3472,
+          y = 176,
+          width = 16,
+          height = 8,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 88,
+          name = "Breakable",
+          type = "breakable",
+          shape = "rectangle",
+          x = 1920,
+          y = 160,
+          width = 16,
+          height = 8,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 89,
+          name = "Spike",
+          type = "spike",
+          shape = "rectangle",
+          x = 1056,
+          y = 112,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 90,
+          name = "Spike",
+          type = "spike",
+          shape = "rectangle",
+          x = 1072,
+          y = 112,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 91,
+          name = "Spike",
+          type = "spike",
+          shape = "rectangle",
+          x = 1088,
+          y = 112,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 92,
+          name = "Spike",
+          type = "spike",
+          shape = "rectangle",
+          x = 1136,
+          y = 96,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 93,
+          name = "Spike",
+          type = "spike",
+          shape = "rectangle",
+          x = 1184,
+          y = 112,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 94,
+          name = "Spike",
+          type = "spike",
+          shape = "rectangle",
+          x = 1200,
+          y = 112,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 95,
+          name = "Spike",
+          type = "spike",
+          shape = "rectangle",
+          x = 1216,
+          y = 112,
           width = 16,
           height = 16,
           rotation = 0,
@@ -135,6 +265,18 @@ return {
           properties = {}
         }
       }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 8,
+      name = "powerup",
+      visible = false,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      objects = {}
     },
     {
       type = "objectgroup",
@@ -1041,6 +1183,21 @@ return {
           y = 0,
           width = 1,
           height = 160,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true
+          }
+        },
+        {
+          id = 96,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 4800,
+          y = 0,
+          width = 1,
+          height = 176,
           rotation = 0,
           visible = true,
           properties = {

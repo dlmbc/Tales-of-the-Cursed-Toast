@@ -5,7 +5,7 @@ function Player:load(x, y)
    self.x = x
    self.y = y
 
-   -- starting position when player falls
+   -- starting position when player falls/died
    self.startX = self.x
    self.startY = self.y
 
@@ -16,24 +16,32 @@ function Player:load(x, y)
    -- physics
    self.dx = 0
    self.dy = 0
-   self.maxSpeed = 105
+   self.maxSpeed = 120
    self.acceleration = 1000
-   self.friction = 400
+   self.friction = 1000
    self.gravity = 900
-   self.jumpAmount = -250
+   self.jumpAmount = -300
 
-   self.health = {current = 3, max = 3}
+   self.highlighted = 1
 
+   -- health bar
+   self.health = {
+      current = 3, 
+      max = 3
+   }
+
+   -- normal color
    self.color = {
       red = 1,
       green = 1,
       blue = 1,
-      speed = 3,
+      speed = 10
    }
 
    self.graceTime = 0
    self.graceDuration = 0.1
 
+   self.isVulnerable = true
    self.alive = true
    self.grounded = false
    self.hasDoubleJump = true
@@ -41,56 +49,60 @@ function Player:load(x, y)
    self.direction = 'right'
    self.state = 'idle'
 
+   -- load the animations
    self:loadAssets()
 
    self.character = {}
-   self.character.body = love.physics.newBody(World, self.x, self.y, "dynamic")
+   self.character.body = love.physics.newBody(World, self.x, self.y, 'dynamic')
    self.character.body:setFixedRotation(true)
    self.character.shape = love.physics.newRectangleShape(self.width * 0.5, self.height * 0.85)
    self.character.fixture = love.physics.newFixture(self.character.body, self.character.shape)
-   self.character.body:setGravityScale(0)
+   self.character.body:setGravityScale(1)
 end
 
+
+--[[
+   this is for the animation 
+--]]
 function Player:loadAssets()
    self.animation = {state}
 
    self.animation.idle = Animation {
       frames = {1, 2}, 
-      interval = 0.1,
-      width = self.width,
-      height = self.height
-   }
-   
-   self.animation.run = Animation {
-      frames = {7, 8}, 
-      interval = 0.1,
-      width = self.width,
-      height = self.height
+      interval = 0.1
    }
    
    self.animation.jump = Animation {
-      frames = {4, 5, 6}, 
-      interval = 0.1,
-      width = self.width,
-      height = self.height
+      frames = {3, 4}, 
+      interval = 0.1
+   }
+
+   self.animation.run = Animation {
+      frames = {5, 6}, 
+      interval = 0.1
    }
 
    self.currentAnimation = self.animation[self.state]
 end
 
 function Player:takeDamage(amount)
-   self:tintRed()
-   if self.health.current - amount > 0 then
-      self.health.current = self.health.current - amount
-   else
-      self.health.current = 0
-      self:die()
+   if self.isVulnerable == true then
+      self:tintRed()
+      if self.health.current - amount > 0 then
+         self.health.current = self.health.current - amount
+      else
+         self.health.current = 0
+         self:die()
+      end
    end
 end
 
 function Player:die()
    self.alive = false
+   self.isVulnerable = true
    GUI.isDisplay = false
+   GUI.keyNum = 0
+   GUI.lockNum = 0
 end
 
 function Player:respawn()
@@ -98,12 +110,14 @@ function Player:respawn()
       self:resetPosition()
       self.health.current = self.health.max
       self.alive = true
-      Map:spawObjects()
+      Map:spawnObjects()
+      -- Map:spawnBreakables()
    end
 end
 
 function Player:resetPosition()
    self.character.body:setPosition(self.startX, self.startY)
+   print(GUI.keyNum, GUI.lockNum)
 end
 
 function Player:tintRed()
@@ -112,16 +126,44 @@ function Player:tintRed()
 end
 
 function Player:update(dt)
-   self:unTint(dt)
-   self:respawn()
-   self:setState()
-   self:move(dt)
-   self:setDirection()
-   self.currentAnimation:update(dt)
-   self:decreaseGraceTime(dt)
-   self:syncPhysics()
-   self:applyGravity(dt)
-   self:jump()
+   if playing == true then
+      self:unTint(dt)
+      self:respawn()
+      self:setState()
+      self:move(dt)
+      self:setDirection()
+      self.currentAnimation:update(dt)
+      self:decreaseGraceTime(dt)
+      self:syncPhysics()
+      self:applyGravity(dt)
+      self:jump()
+      self:selectPowerUp()
+      Timer.update(dt)
+   end
+end
+
+function Player:selectPowerUp()
+   if love.keyboard.wasPressed('l') then
+      self.highlighted = self.highlighted == 1 and 2 or 1
+   end
+
+   if love.keyboard.wasPressed('k') then
+      if self.highlighted == 1 and GUI.isDisplayChocolate == true then
+         
+         GUI.isDisplayChocolate = false
+         GUI.chocoNum = 0
+         self.isVulnerable = false
+         if self.isVulnerable == false then
+            Timer.after(3, function() self.isVulnerable = true end)
+         end
+         
+         if GUI.chocoNum == 0 then
+            Map:spawnPowerups()
+         end
+      elseif self.highlighted == 2 and GUI.cheeseNum == 1 then
+         print('cheese')
+      end
+   end
 end
 
 function Player:unTint(dt)
@@ -132,22 +174,22 @@ end
 
 function Player:setState()
    if not self.grounded then
-      self.state = "jump"
+      self.state = 'jump'
       self.currentAnimation = self.animation[self.state]
    elseif self.dx == 0 then
-      self.state = "idle"
+      self.state = 'idle'
       self.currentAnimation = self.animation[self.state]
    else
-      self.state = "run"
+      self.state = 'run'
       self.currentAnimation = self.animation[self.state]
    end
 end
 
 function Player:setDirection()
    if self.dx < 0 then
-      self.direction = "left"
+      self.direction = 'left'
    elseif self.dx > 0 then
-      self.direction = "right"
+      self.direction = 'right'
    end
 end
 
@@ -164,9 +206,9 @@ function Player:applyGravity(dt)
 end
 
 function Player:move(dt)
-   if love.keyboard.isDown("d") then
+   if love.keyboard.isDown('d') then
       self.dx = math.min(self.dx + self.acceleration * dt, self.maxSpeed)
-   elseif love.keyboard.isDown("a") then
+   elseif love.keyboard.isDown('a') then
       self.dx = math.max(self.dx - self.acceleration * dt, -self.maxSpeed)
    else
       self:applyFriction(dt)
@@ -236,16 +278,25 @@ end
 
 function Player:draw()
    local scaleX = 1
-   if self.direction == "left" then
+   if self.direction == 'left' then
       scaleX = -1
    end
-   
-   love.graphics.setColor(self.color.red, self.color.green, self.color.blue)
+   if self.isVulnerable == true then
+      love.graphics.setColor(self.color.red, self.color.green, self.color.blue)
+         love.graphics.draw(
+            gTextures.toast, gFrames.toast[self.currentAnimation:getCurrentFrame()],
+            self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
+         )
+      love.graphics.setColor(1,1,1,1)
+   elseif self.isVulnerable == false then
+      love.graphics.setColor(0.17, 0.54, 0.71)
+         love.graphics.circle('line', self.x, self.y, 10)
+      love.graphics.setColor(1,1,1,1)
       love.graphics.draw(
          gTextures.toast, gFrames.toast[self.currentAnimation:getCurrentFrame()],
-         self.x, self.y, 0, scaleX, 1, self.currentAnimation.width/2, self.currentAnimation.height/2
+         self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
       )
-   love.graphics.setColor(1,1,1,1)
+   end
 end
 
 return Player

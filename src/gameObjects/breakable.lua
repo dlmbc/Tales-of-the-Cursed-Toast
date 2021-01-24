@@ -2,37 +2,36 @@ local Breakable = {}
 Breakable.__index = Breakable
 
 local ActiveBreakables = {}
+local InactiveBreakable = {}
 
-function Breakable.new(x, y)
-   local instance = setmetatable({}, Breakable)
-   instance.x = x
-   instance.y = y
-   instance.startX = instance.x
-   instance.startY = instance.y
-   instance.img = love.graphics.newImage("graphics/brokenDirt.png")
-   instance.width = instance.img:getWidth()
-   instance.height = instance.img:getHeight()
-   instance.scaleX = 1
-   instance.toBeRemoved = false
-   instance.destroyed = false
-
-   instance.timerRemove = 0
-   instance.countRemove = 1
-   instance.countdowntimeRemove = 0.75
-
-   instance.physics = {}
-   instance.physics.body = love.physics.newBody(World, instance.x, instance.y, "static")
-   instance.physics.shape = love.physics.newRectangleShape(instance.width, instance.height)
-   instance.physics.fixture = love.physics.newFixture(instance.physics.body, instance.physics.shape)
+function Breakable:load(x, y)
+   local self = setmetatable({}, self)
+   self.x = x
+   self.y = y
    
-   table.insert(ActiveBreakables, instance)
+   self.startX = self.x
+   self.startY = self.y
+
+   self.img = love.graphics.newImage("graphics/brokenDirt.png")
+   self.width = self.img:getWidth()
+   self.height = self.img:getHeight()
+
+   self.dy = 0
+
+   self.toBeRemoved = false
+
+   self.physics = {}
+   self.physics.body = love.physics.newBody(World, self.x, self.y, "kinematic")
+   self.physics.shape = love.physics.newRectangleShape(self.width, self.height)
+   self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
+   -- self.physics.body:setGravityScale(1)
+   table.insert(ActiveBreakables, self)
 end
 
 function Breakable:remove()
    for i, instance in ipairs(ActiveBreakables) do
       if instance == self then
          self.physics.body:setActive(false)
-         self.destroyed = true
          table.remove(ActiveBreakables, i)
       end
    end
@@ -46,26 +45,25 @@ function Breakable.removeAll()
    ActiveBreakables = {}
 end
 
-function Breakable:countDownRemove(dt)
-    self.timerRemove = self.timerRemove + dt
-    if self.timerRemove > self.countdowntimeRemove then
-        self.timerRemove = self.timerRemove % self.countdowntimeRemove
-        self.countRemove = self.countRemove - 1
-
-        if self.countRemove == 0 then
-            self:remove()
-        end
-    end
-end
-
 function Breakable:update(dt)
-   self:checkRemove(dt)
+   self:syncPhysics()
 end
 
-function Breakable:checkRemove(dt)
+function Breakable:syncPhysics()
+   self.x, self.y = self.physics.body:getPosition()
    if self.toBeRemoved then
-      self:countDownRemove(dt)
+      if self.y > MapHeight or Player.y > MapHeight then
+         self:respawnBreakable()
+         self.dy = 0
+      end
    end
+   self.physics.body:setLinearVelocity(0, self.dy)
+end
+
+function Breakable:respawnBreakable()
+   self.physics.body:setPosition(self.startX, self.startY)
+   print(#ActiveBreakables)
+   self.physics.body:setActive(true)
 end
 
 function Breakable:draw()
@@ -79,16 +77,17 @@ function Breakable.updateAll(dt)
 end
 
 function Breakable.drawAll()
-   for i,instance in ipairs(ActiveBreakables) do
+   for i, instance in ipairs(ActiveBreakables) do
       instance:draw()
    end
 end
 
 function Breakable.beginContact(a, b, collision)
-   for i,instance in ipairs(ActiveBreakables) do
+   for i, instance in ipairs(ActiveBreakables) do
       if a == instance.physics.fixture or b == instance.physics.fixture then
-         if a == Player.physics.fixture or b == Player.physics.fixture then
+         if a == Player.character.fixture or b == Player.character.fixture then
             instance.toBeRemoved = true
+            instance.dy = 25
             return true
          end
       end

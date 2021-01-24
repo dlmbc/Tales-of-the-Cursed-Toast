@@ -17,7 +17,7 @@ function GenerateQuads(atlas, tilewidth, tileheight)
     return spritesheet
 end
 
-function GenerateQuadsKey(atlas)
+function GenerateQuadsKey(atlas, tilewidth, tileheight)
     local x = 0
     local y = 0
 

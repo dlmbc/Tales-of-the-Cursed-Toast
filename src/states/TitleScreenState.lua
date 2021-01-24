@@ -3,6 +3,9 @@ TitleScreenState = Class{__includes = BaseState}
 local highlighted = 1
 
 function TitleScreenState:init()
+    if titleState == false then
+        Map:clean()
+    end
     self.transitionAlpha = 0
     titleState = true
     playing = false

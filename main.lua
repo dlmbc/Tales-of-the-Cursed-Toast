@@ -4,6 +4,8 @@ require 'src/Dependencies'
 
 playing = true
 titleState = true
+fromPlay = false
+fromTitle = false
 
 function love.load()
 
@@ -22,7 +24,7 @@ function love.load()
 		['logo-play'] = function() return StartState() end,
 		['load'] = function() return LoadState() end
 	}
-	gStateMachine:change('title')
+	gStateMachine:change('play')
 
 	gSounds.tbgm:play()
 	gSounds.tbgm:setLooping(true)
@@ -56,11 +58,9 @@ function love.draw()
 end
 
 function beginContact(a, b, collision)
-	-- Player:beginContact(a, b, collision)
 	gStateMachine:beginContact(a, b, collision)
 end
 
 function endContact(a, b, collision)
-	-- Player:endContact(a, b, collision)
 	gStateMachine:endContact(a, b, collision)
 end

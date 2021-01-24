@@ -31,12 +31,12 @@ function Slime:load(x, y)
 
    self:loadAssets()
 
-   self.slime = {}
-   self.slime.body = love.physics.newBody(World, self.x, self.y, 'dynamic')
-   self.slime.body:setFixedRotation(true)
-   self.slime.body:setMass(25)
-   self.slime.shape = love.physics.newRectangleShape(self.width * 0.4, self.height * 0.75)
-   self.slime.fixture = love.physics.newFixture(self.slime.body, self.slime.shape)
+   self.physics = {}
+   self.physics.body = love.physics.newBody(World, self.x, self.y, 'dynamic')
+   self.physics.body:setFixedRotation(true)
+   self.physics.body:setMass(25)
+   self.physics.shape = love.physics.newRectangleShape(self.width * 0.4, self.height * 0.75)
+   self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
     
    table.insert(ActiveSlime, self)
 end
@@ -63,7 +63,7 @@ end
 
 function Slime.removeAll()
    for i,v in ipairs(ActiveSlime) do
-      v.slime.body:destroy()
+      v.physics.body:destroy()
    end
 
    ActiveSlime = {}
@@ -96,18 +96,20 @@ function Slime:normalColor(dt)
 end
 
 function Slime:update(dt)
-    self:syncPhysics()
-    self.currentAnimation:update(dt)
-    self:normalColor(dt)
- end
+   if playing == true then
+      self:syncPhysics()
+      self.currentAnimation:update(dt)
+      self:normalColor(dt)
+   end
+end
 
 function Slime:flipDirection()
    self.dx = -self.dx
 end
 
 function Slime:syncPhysics()
-   self.x, self.y = self.slime.body:getPosition()
-   self.slime.body:setLinearVelocity(self.dx * self.speedMod, 100)
+   self.x, self.y = self.physics.body:getPosition()
+   self.physics.body:setLinearVelocity(self.dx * self.speedMod, 100)
 end
 
 function Slime:draw()
@@ -137,7 +139,7 @@ end
 
 function Slime.beginContact(a, b, collision)
    for i,instance in ipairs(ActiveSlime) do
-      if a == instance.slime.fixture or b == instance.slime.fixture then
+      if a == instance.physics.fixture or b == instance.physics.fixture then
          if a == Player.character.fixture or b == Player.character.fixture then
             Player:takeDamage(instance.damage)
          end

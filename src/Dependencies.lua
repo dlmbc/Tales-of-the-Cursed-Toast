@@ -20,7 +20,14 @@ GUI = require 'src/gui/gui'
 
 -- game objects
 Breakable = require'src/gameObjects/breakable'
+Spike = require 'src/gameObjects/spike'
 Key = require 'src/gameObjects/key'
+Lock = require 'src/gameObjects/lock'
+Checkpoint = require 'src/gameObjects/checkpoint'
+Finish = require 'src/gameObjects/finish'
+
+-- power ups
+Chocolate = require 'src/powerups/chocolate'
 
 require 'src/StateMachine'
 require 'src/states/BaseState'
@@ -49,13 +56,20 @@ gSounds = {
 gTextures = {
     background = love.graphics.newImage('graphics/background/Title.png'),
     forest = love.graphics.newImage('graphics/background/Forest.png'),
+    mountain = love.graphics.newImage('graphics/background/Mountain.png'),
+    cave = love.graphics.newImage('graphics/background/Cave.png'),
+    kitchen = love.graphics.newImage('graphics/background/Kitchen.png'),
     cave = love.graphics.newImage('graphics/background/Cave.png'),
     arrow = love.graphics.newImage('graphics/arrow.png'),
     panel = love.graphics.newImage('graphics/holder.png'),
     logo = love.graphics.newImage('graphics/logo.png'),
     toast = love.graphics.newImage('graphics/toastSprite.png'),
     slime = love.graphics.newImage('graphics/slime.png'),
-    keyLock = love.graphics.newImage('graphics/key_lock.png')
+    keyLock = love.graphics.newImage('graphics/key_lock.png'),
+    flag = love.graphics.newImage('graphics/flag.png'),
+    checkpoint = love.graphics.newImage('graphics/checkpoint.png'),
+    spike = love.graphics.newImage('graphics/spike.png'),
+    chocolate = love.graphics.newImage('graphics/chocolate.png')
 }
 
 gFrames = {
@@ -63,6 +77,6 @@ gFrames = {
     logo = GenerateQuads(gTextures.logo, 272, 160),
     toast = GenerateQuads(gTextures.toast, 16, 16),
     slime = GenerateQuads(gTextures.slime, 16, 13),
-    key = GenerateQuadsKey(gTextures.keyLock),
-    lock = GenerateQuadsLock(gTextures.keyLock)
+    keyLock = GenerateQuads(gTextures.keyLock, 16, 16),
+    chocolate = GenerateQuads(gTextures.chocolate, 16, 16)
 }

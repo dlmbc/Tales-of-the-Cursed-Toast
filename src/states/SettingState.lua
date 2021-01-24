@@ -4,6 +4,12 @@ local highlighted = 1
 local sfxNext = 1
 local bgmNext = 1
 
+function SettingState:init()
+    if titleState == false then
+        Map:clean()
+    end
+end
+
 function SettingState:update(dt)
     if love.keyboard.wasPressed('s') then
         highlighted = highlighted + 1
@@ -34,7 +40,8 @@ function SettingState:update(dt)
     if titleState then
         if love.keyboard.wasPressed('return') then
             if highlighted == 3 then
-                gStateMachine:change('title') 
+                gStateMachine:change('title')
+                highlighted = 1
             end
         elseif love.keyboard.wasPressed('escape') then
             gStateMachine:change('title')
@@ -42,7 +49,8 @@ function SettingState:update(dt)
     else
         if love.keyboard.wasPressed('return') then
             if highlighted == 3 then
-                gStateMachine:change('play') 
+                gStateMachine:change('play')
+                highlighted = 1
             end
         elseif love.keyboard.wasPressed('escape') then
             gStateMachine:change('play')
@@ -56,11 +64,6 @@ function SettingState:render()
     love.graphics.setColor(1,1,1,0.5)
         love.graphics.draw(gTextures.panel)
     love.graphics.setColor(1,1,1,1)
-    
-    -- love.graphics.setFont(medium)
-    -- love.graphics.setColor(0,0,0,1)
-    --     love.graphics.printf('Settings', 89, 34, 101, 'center')
-    -- love.graphics.setColor(1,1,1,1)
 
     love.graphics.setFont(medium)
     if highlighted == 1 then

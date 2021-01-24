@@ -3,16 +3,14 @@ PlayState = Class{__includes = BaseState}
 local highlighted = 1
 
 function PlayState:init()
-    -- self.playing = true
     titleState = false
     playing = true
 
-    -- Slime.loadAssets()
     Map:load()
-    -- Player:load()
     GUI:load()
 end
 
+-- function 
 function PlayState:update(dt)
     if not playing then
         if love.keyboard.wasPressed('w') then
@@ -30,12 +28,16 @@ function PlayState:update(dt)
         if love.keyboard.wasPressed('return') then
             if highlighted == 1 then
                 playing = true
+                highlighted = 1
             elseif highlighted == 2 then
                 -- do nothing for now
             elseif highlighted == 3 then
                 gStateMachine:change('settings')
+                highlighted = 1
             elseif highlighted == 4 then
                 gStateMachine:change('title')
+                highlighted = 1
+                gSounds.tbgm:play()
             end
         end
     else
@@ -43,11 +45,15 @@ function PlayState:update(dt)
         Player:update(dt)
         Slime.updateAll(dt)
         Breakable.updateAll(dt)
+        Spike.updateAll(dt)
         Key.updateAll(dt)
+        Lock.updateAll(dt)
+        Checkpoint.updateAll(dt)
+        Finish.updateAll(dt)
+        Chocolate.updateAll(dt)
         GUI:update(dt)
         Map:positionCamera(self, Player, Camera)
         Map:update(dt)
-
         if love.keyboard.wasPressed('escape') then
             if playing then
                 playing = false
@@ -61,9 +67,10 @@ end
 function PlayState:render()
     if not playing then
         if not titleState then
-            -- love.graphics.setColor(1,1,1,0.5)
+            love.graphics.draw(Map:backGround())
+            love.graphics.setColor(1,1,1,0.5)
                 love.graphics.draw(gTextures.panel)
-            -- love.graphics.setColor(1,1,1,1)
+            love.graphics.setColor(1,1,1,1)
 
             love.graphics.setFont(medium)
             if highlighted == 1 then
@@ -99,7 +106,12 @@ function PlayState:render()
             Player:draw()
             Slime.drawAll()
             Breakable.drawAll()
+            Spike.drawAll()
             Key.drawAll()
+            Lock.drawAll()
+            Checkpoint.drawAll()
+            Finish.drawAll()
+            Chocolate.drawAll()
         Camera:unset()
         GUI:draw()
     end
@@ -107,8 +119,13 @@ end
 
 function PlayState:beginContact(a, b, collision)
     Breakable.beginContact(a, b, collision)
+    Spike.beginContact(a, b, collision)
     Key.beginContact(a, b, collision)
+    Lock.beginContact(a, b, collision)
     Slime.beginContact(a, b, collision)
+    Checkpoint.beginContact(a, b, collision)
+    Finish.beginContact(a, b, collision)
+    Chocolate.beginContact(a, b, collision)
     Player:beginContact(a, b, collision)
 end
 
