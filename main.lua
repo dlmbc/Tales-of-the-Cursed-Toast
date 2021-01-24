@@ -24,7 +24,7 @@ function love.load()
 		['logo-play'] = function() return StartState() end,
 		['load'] = function() return LoadState() end
 	}
-	gStateMachine:change('play')
+	gStateMachine:change('logo-play')
 
 	gSounds.tbgm:play()
 	gSounds.tbgm:setLooping(true)

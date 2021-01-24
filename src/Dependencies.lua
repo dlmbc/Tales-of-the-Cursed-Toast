@@ -74,7 +74,7 @@ gTextures = {
 
 gFrames = {
     arrow = GenerateQuads(gTextures.arrow, 4, 5),
-    logo = GenerateQuads(gTextures.logo, 272, 160),
+    logo = GenerateQuads(gTextures.logo, 384, 224),
     toast = GenerateQuads(gTextures.toast, 16, 16),
     slime = GenerateQuads(gTextures.slime, 16, 13),
     keyLock = GenerateQuads(gTextures.keyLock, 16, 16),
