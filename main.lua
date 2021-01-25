@@ -2,10 +2,9 @@ love.graphics.setDefaultFilter('nearest', 'nearest')
 
 require 'src/Dependencies'
 
-playing = true
-titleState = true
-fromPlay = false
-fromTitle = false
+playing = false -- not playing
+titleState = true -- title sscreen first before playing
+loaded = false -- no load game
 
 function love.load()
 

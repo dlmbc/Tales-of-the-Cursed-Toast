@@ -3,6 +3,11 @@ local Map = {}
 
 function Map:load()
    self.currentLevel = 1
+
+   if loaded == true then
+      self:loadGame()
+   end
+
    World = love.physics.newWorld(0,2000)
    World:setCallbacks(beginContact, endContact)
 
@@ -168,6 +173,27 @@ function Map:spawnPowerups()
          Chocolate:load(v.x + v.width/2 , v.y)
 		end
 	end
+end
+
+function Map:saveGame()
+   self.data = {}
+   self.data.lvl = {
+      levels = self.currentLevel
+   }
+
+   -- serialize the current level
+   self.savedGame = Serialize(self.data)
+   love.filesystem.write('level.txt', self.savedGame)
+end
+
+function Map:loadGame()
+   -- load the serialize level
+   if love.filesystem.getInfo('level.txt') then
+      file = love.filesystem.read('level.txt')
+      data = setfenv(loadstring(file), {})()
+
+      self.currentLevel = data.lvl.levels
+   end
 end
 
 return Map

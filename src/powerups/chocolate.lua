@@ -84,10 +84,10 @@ function Chocolate.beginContact(a, b, collision)
       if a == instance.physics.fixture or b == instance.physics.fixture then
          if a == Player.character.fixture or b == Player.character.fixture then
             if GUI.chocoNum == 0 then
-            instance.toBeRemoved = true
-            GUI.isDisplayChocolate = true
-            GUI.chocoNum = 1
-            return true
+               instance.toBeRemoved = true
+               GUI.isDisplayChocolate = true
+               GUI.chocoNum = 1
+               return true
             else
                instance.toBeRemoved = false
                instance.physics.fixture:setMask(1)

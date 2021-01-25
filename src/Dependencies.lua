@@ -9,6 +9,7 @@ STI  = require 'lib/sti'
 
 -- https://github.com/airstruck/knife
 Timer = require 'lib/knife.timer'
+Serialize = require 'lib/knife.serialize'
 
 -- game entities
 Player = require 'src/entities/player'
@@ -59,7 +60,7 @@ gTextures = {
     mountain = love.graphics.newImage('graphics/background/Mountain.png'),
     cave = love.graphics.newImage('graphics/background/Cave.png'),
     kitchen = love.graphics.newImage('graphics/background/Kitchen.png'),
-    cave = love.graphics.newImage('graphics/background/Cave.png'),
+    
     arrow = love.graphics.newImage('graphics/arrow.png'),
     panel = love.graphics.newImage('graphics/holder.png'),
     logo = love.graphics.newImage('graphics/logo.png'),

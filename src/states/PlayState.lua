@@ -6,6 +6,7 @@ function PlayState:init()
     titleState = false
     playing = true
 
+    loaded = false -- not in the load state
     Map:load()
     GUI:load()
 end
@@ -30,7 +31,7 @@ function PlayState:update(dt)
                 playing = true
                 highlighted = 1
             elseif highlighted == 2 then
-                -- do nothing for now
+                Map:saveGame()
             elseif highlighted == 3 then
                 gStateMachine:change('settings')
                 highlighted = 1

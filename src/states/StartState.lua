@@ -6,18 +6,21 @@ function StartState:init()
     self.frame = 1
 
     self.animation = Animation {
-        frames = {},
-        interval = 0.1
+        frames = {}, -- initialize table then update later
+        interval = 0.1 -- how fast the animation
     }
     
     self.currentAnimation = self.animation
 end
 
 function StartState:update(dt)
+    -- for every iteration add self.frame by 1 then insert it in the frames initialize in StartState:init()
     for i = 1, 38 do
         self.frame = self.frame + 1
         table.insert(self.animation.frames, self.frame)
     end
+    
+    -- update the animation
     self.currentAnimation:update(dt)
     
     if self.currentAnimation.currentFrame == 38 then
