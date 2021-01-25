@@ -50,7 +50,7 @@ large = love.graphics.newFont('font/font.ttf', 32)
 
 gSounds = {
     tbgm = love.audio.newSource('sounds/music/Aspire.mp3', 'static'),
-    -- forest = love.audio.newSource('sounds/music/forest.mp3', 'static'),
+    forest = love.audio.newSource('sounds/music/fork.mp3', 'static'),
     jump = love.audio.newSource('sounds/SFX/jump.wav', 'static')
 }
 
@@ -63,7 +63,10 @@ gTextures = {
     
     arrow = love.graphics.newImage('graphics/arrow.png'),
     panel = love.graphics.newImage('graphics/holder.png'),
+    
     logo = love.graphics.newImage('graphics/logo.png'),
+    kaje = love.graphics.newImage('graphics/KAJElogo.png'),
+
     toast = love.graphics.newImage('graphics/toastSprite.png'),
     slime = love.graphics.newImage('graphics/slime.png'),
     keyLock = love.graphics.newImage('graphics/key_lock.png'),

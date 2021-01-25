@@ -24,7 +24,7 @@ function StartState:update(dt)
     self.currentAnimation:update(dt)
     
     if self.currentAnimation.currentFrame == 38 then
-        Timer.tween(1, {
+        Timer.tween(2, {
             [self] = {transitionAlpha = 1}
         }):finish(function()
             gStateMachine:change('title') end)
@@ -43,7 +43,7 @@ function StartState:render()
     if self.currentAnimation.currentFrame < 38 then
         love.graphics.draw(gTextures.logo, gFrames.logo[self.currentAnimation:getCurrentFrame()])
     else
-        love.graphics.draw(gTextures.logo, gFrames.logo[38])
+        love.graphics.draw(gTextures.kaje)
     end
     love.graphics.setColor(1, 1, 1, self.transitionAlpha)
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
