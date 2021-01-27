@@ -79,9 +79,9 @@ function Finish.beginContact(a, b, collision)
    for i,instance in ipairs(ActiveFinish) do
       if a == instance.physics.fixture or b == instance.physics.fixture then
          if a == Player.character.fixture or b == Player.character.fixture then
-                instance.toBeRemoved = true
-                GUI.flagNum = 1
-               return true
+            instance.toBeRemoved = true
+            GUI.flagNum = 1
+            return true
          end
       end
    end

@@ -7,6 +7,8 @@ function TitleScreenState:init()
         Map:clean()
     end
 
+    gSounds.forest:stop()
+    
     self.transitionAlpha = 0
     titleState = true
     playing = false

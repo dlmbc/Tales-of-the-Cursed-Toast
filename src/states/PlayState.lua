@@ -101,8 +101,8 @@ function PlayState:render()
     else
         love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
 
-        gSounds.tbgm:pause()
-        Map.level:draw(-Camera.x)
+        gSounds.tbgm:stop()
+        Map.level:draw(-Camera.x, -Camera.y)
         Camera:set()
             Player:draw()
             Slime.drawAll()

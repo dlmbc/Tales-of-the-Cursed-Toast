@@ -40,22 +40,20 @@ function Slime:load(x, y)
     
    table.insert(ActiveSlime, self)
 end
-
+--[[
+   Slime animation   
+--]]
 function Slime:loadAssets()
    self.animation = {state}
 
    self.animation.walk = Animation {
       frames = {1,2,3},
       interval = 0.1,
-      width = self.width,
-      height = self.width
    }
 
    self.animation.run = Animation {
       frames = {1,2,3},
       interval = 0.1,
-      width = self.width,
-      height = self.width
    }
 
    self.currentAnimation = self.animation[self.state]
@@ -69,11 +67,17 @@ function Slime.removeAll()
    ActiveSlime = {}
 end
 
+--[[
+   change color when speed increased to 3   
+--]]
 function Slime:changeColor()
     self.color.blue = 0
     self.color.green = 0
 end
 
+--[[
+   increase speed when hit by player, hit the wall or hit other entities   
+--]]
 function Slime:increaseSpeed()
    self.speedCounter = self.speedCounter + 1
    if self.speedCounter > self.speedTrigger then
@@ -114,14 +118,16 @@ end
 
 function Slime:draw()
    local scaleX = 1
+   
    if self.dx < 0 then
       scaleX = -1
    end
+
    love.graphics.setColor(self.color.blue, self.color.red, self.color.green)
-   love.graphics.draw(
-      gTextures.slime, gFrames.slime[self.currentAnimation:getCurrentFrame()],
-      self.x, self.y, 0, scaleX, 1, self.currentAnimation.width/2, self.currentAnimation.height/2
-   )
+      love.graphics.draw(
+         gTextures.slime, gFrames.slime[self.currentAnimation:getCurrentFrame()],
+         self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
+      )
    love.graphics.setColor(1,1,1,1)
 end
 

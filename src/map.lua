@@ -42,6 +42,8 @@ function Map:backGround()
       gSounds.forest:setLooping(true)
       gSounds.forest:setVolume(0.75)
       return gTextures.forest
+   elseif self.currentLevel >= 5 and self.currentLevel <= 8 then
+      return gTextures.mountain
    end
 end
 
@@ -56,16 +58,27 @@ end
 
 function Map:positionCamera(player, camera)
    local halfScreen =  VIRTUAL_WIDTH / 2
+   local halfHeight = VIRTUAL_HEIGHT / 2
+
+   if self.currentLevel >= 1 and self.currentLevel <= 4 then
+      if Player.x < (MapWidth - halfScreen) then
+         boundX = math.max(0, Player.x - halfScreen)
+      else
+         boundX = math.min(Player.x - halfScreen, MapWidth - VIRTUAL_WIDTH)
+      end
    
-   if Player.x < (MapWidth - halfScreen) then
-      boundX = math.max(0, Player.x - halfScreen)
-   else
-      boundX = math.min(Player.x - halfScreen, MapWidth - VIRTUAL_WIDTH)
+      Camera:setPosition(boundX, 0)
+      BACKGROUND_SCROLL = (boundX / 3) % 384
+   elseif self.currentLevel == 5 then
+      if Player.y < (MapHeight - halfHeight) then
+         boundY = math.max(0, Player.y - halfHeight)
+      else
+         boundY = math.min(Player.y - halfHeight, MapHeight - VIRTUAL_HEIGHT)
+      end
+   
+      Camera:setPosition(0, boundY)
+      BACKGROUND_SCROLL = (-boundY / 3) % 384
    end
-   
-   Camera:setPosition(boundX, 0)
-   
-   BACKGROUND_SCROLL = (boundX/3) % 384
 end
 
 function Map:next()
@@ -83,8 +96,6 @@ end
 
 function Map:clean()
    self.level:box2d_removeLayer("solid")
-   -- self.level:box2d_removeLayer('entity')
-   -- self.level:box2d_removeLayer('object')
    Breakable.removeAll()
    Slime.removeAll()
    Key.removeAll()
@@ -97,10 +108,6 @@ end
 
 function Map:update(dt)
    if playing == true then
-      if Player.x > MapWidth - 16 then
-         self:next()
-      end
-
       if Player.y > MapHeight then
          Player:die()
 

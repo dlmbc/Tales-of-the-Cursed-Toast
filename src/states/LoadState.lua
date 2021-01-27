@@ -73,7 +73,7 @@ end
 
 function LoadState:render()
     if not love.filesystem.getInfo('level.txt') then
-        love.graphics.print('no svae')
+        love.graphics.printf('no save', 125, 75, VIRTUAL_WIDTH, 'left')
     else
         if not playing then
             if not titleState then
@@ -110,8 +110,8 @@ function LoadState:render()
         else
             love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
 
-            gSounds.tbgm:pause()
-            Map.level:draw(-Camera.x)
+            gSounds.tbgm:stop()
+            Map.level:draw(-Camera.x, -Camera.y)
             Camera:set()
                 Player:draw()
                 Slime.drawAll()

@@ -111,7 +111,6 @@ function Player:respawn()
       self.health.current = self.health.max
       self.alive = true
       Map:spawnObjects()
-      -- Map:spawnBreakables()
    end
 end
 
@@ -278,9 +277,11 @@ end
 
 function Player:draw()
    local scaleX = 1
+   
    if self.direction == 'left' then
       scaleX = -1
    end
+
    if self.isVulnerable == true then
       love.graphics.setColor(self.color.red, self.color.green, self.color.blue)
          love.graphics.draw(

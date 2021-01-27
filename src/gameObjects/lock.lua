@@ -20,7 +20,6 @@ function Lock:load(x, y)
    self.physics.body = love.physics.newBody(World, self.x, self.y, "static")
    self.physics.shape = love.physics.newRectangleShape(self.width, self.height)
    self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
---    self.physics.fixture:setSensor(true)
 
    table.insert(ActiveLocks, self)
 end
