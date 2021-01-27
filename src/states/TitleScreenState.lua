@@ -28,6 +28,10 @@ function TitleScreenState:update(dt)
         end
     end
 
+    if love.keyboard.wasPressed('o') then
+        love.filesystem.remove('level.txt')
+    end
+
     if love.keyboard.wasPressed('return') or love.keyboard.wasPressed('enter') then
         if highlighted == 1 then
             Timer.tween(1, {
