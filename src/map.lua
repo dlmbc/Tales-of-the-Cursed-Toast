@@ -40,7 +40,7 @@ function Map:backGround()
    if self.currentLevel >= 1 and self.currentLevel <= 4 then
       gSounds.forest:play()
       gSounds.forest:setLooping(true)
-      gSounds.forest:setVolume(0.5)
+      gSounds.forest:setVolume(0.75)
       return gTextures.forest
    end
 end

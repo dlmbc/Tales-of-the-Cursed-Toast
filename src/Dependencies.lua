@@ -49,8 +49,8 @@ medium = love.graphics.newFont('font/font.ttf', 16)
 large = love.graphics.newFont('font/font.ttf', 32)
 
 gSounds = {
-    tbgm = love.audio.newSource('sounds/music/Aspire.mp3', 'static'),
-    forest = love.audio.newSource('sounds/music/fork.mp3', 'static'),
+    tbgm = love.audio.newSource('sounds/music/Aspire.mp3', 'stream'),
+    forest = love.audio.newSource('sounds/music/spoon.mp3', 'stream'),
     jump = love.audio.newSource('sounds/SFX/jump.wav', 'static')
 }
 
