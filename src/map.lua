@@ -43,6 +43,7 @@ function Map:backGround()
       gSounds.forest:setVolume(0.75)
       return gTextures.forest
    elseif self.currentLevel >= 5 and self.currentLevel <= 8 then
+      gSounds.forest:stop()
       return gTextures.mountain
    end
 end
