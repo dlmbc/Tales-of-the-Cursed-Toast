@@ -35,6 +35,7 @@ function GUI:draw()
    self:displayKey()
    self:displayHearts()
    self:displayPowerUps()
+   self:displayLevel()
 end
 
 function GUI:displayHearts()
@@ -66,6 +67,11 @@ function GUI:displayPowerUps()
    end
       love.graphics.rectangle('line', 175, 5, 16, 16)
       love.graphics.setColor(1, 1, 1, 1)
+end
+
+function GUI:displayLevel()
+   love.graphics.setFont(small)
+   love.graphics.printf("Level: " .. Map.currentLevel, 25, 25, VIRTUAL_WIDTH, 'left')
 end
 
 return GUI
