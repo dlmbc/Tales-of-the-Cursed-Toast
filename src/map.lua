@@ -1,4 +1,3 @@
-
 local Map = {}
 
 function Map:load()

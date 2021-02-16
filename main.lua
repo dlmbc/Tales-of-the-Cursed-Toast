@@ -53,25 +53,31 @@ end
 
 function love.draw()
 	push:start()
-	if Map.currentLevel >= 9 and Map.currentLevel <= 12 then
-		love.graphics.setShader(shader)
-		shader:send('screen', {
-			VIRTUAL_WIDTH,
-			VIRTUAL_HEIGHT
-		})
-		shader:send('lights[0].diffuse', {
-			1.0, 1.0, 1.0
-		 })
-		 
-		 shader:send('lights[0].position', {
-			Player.x - Camera.x,
-			Player.y - Camera.y
-		 })
-		 shader:send('lights[0].power', 25)
-	  
-		 shader:send('lights[0].enabled', true)
-		gStateMachine:render()
-		love.graphics.setShader()
+	if play == true then
+		if Map.currentLevel >= 9 and Map.currentLevel <= 12 then
+			love.graphics.setShader(shader)
+			shader:send('screen', {
+				VIRTUAL_WIDTH,
+				VIRTUAL_HEIGHT
+			})
+			shader:send('lights[0].diffuse', {
+				1.0, 1.0, 1.0
+			})
+			
+			shader:send('lights[0].position', {
+				Player.x - Camera.x,
+				Player.y - Camera.y
+			})
+			shader:send('lights[0].power', 25)
+		
+			shader:send('lights[0].enabled', true)
+				gStateMachine:render()
+			love.graphics.setShader()
+		end
+		if (Map.currentLevel >= 1 and Map.currentLevel <= 8) or
+			(Map.currentLevel >= 13 or Map.currentLevel <= 16) then
+			gStateMachine:render()
+		end
 	else
 		gStateMachine:render()
 	end
