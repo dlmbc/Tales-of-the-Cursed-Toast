@@ -44,7 +44,7 @@ function LoadState:update(dt)
                 elseif highlighted == 4 then
                     gStateMachine:change('title')
                     highlighted = 1
-                    gSounds.tbgm:play()
+                    gSounds.aspire:play()
                 end
             end
         else
