@@ -205,10 +205,15 @@ function Player:applyGravity(dt)
 end
 
 function Player:move(dt)
+   local windFriction = 0
+   if Map.currentLevel == 6 or Map.currentLevel == 7 then
+      windFriction = Snow.wind * 8
+   end
+
    if love.keyboard.isDown('d') then
-      self.dx = math.min(self.dx + self.acceleration * dt, self.maxSpeed)
+      self.dx = math.min(self.dx + self.acceleration * dt, self.maxSpeed + windFriction)
    elseif love.keyboard.isDown('a') then
-      self.dx = math.max(self.dx - self.acceleration * dt, -self.maxSpeed)
+      self.dx = math.max(self.dx - self.acceleration * dt, -self.maxSpeed + windFriction)
    else
       self:applyFriction(dt)
    end
@@ -298,6 +303,8 @@ function Player:draw()
          self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
       )
    end
+
+   love.graphics.setShader()
 end
 
 return Player

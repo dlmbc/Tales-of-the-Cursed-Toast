@@ -27,7 +27,7 @@ function Map:init()
 
    if playing == true then
       self:spawnEntities()
-      self:spawnBreakables()
+      self:spawnFallingPlatform()
       self:spawnObjects()
       self:spawnSpikes()
       self:spawnKeyLock()
@@ -38,13 +38,25 @@ end
 
 function Map:backGround()
    if self.currentLevel >= 1 and self.currentLevel <= 4 then
-      gSounds.forest:play()
-      gSounds.forest:setLooping(true)
-      gSounds.forest:setVolume(0.75)
+      _platform = 1
+      gSounds.morningDew:play()
+      gSounds.morningDew:setLooping(true)
+      gSounds.morningDew:setVolume(0.75)
       return gTextures.forest
    elseif self.currentLevel >= 5 and self.currentLevel <= 8 then
-      gSounds.forest:stop()
+      _platform = 2
+      gSounds.morningDew:stop()
+      gSounds.freezeOut:play()
+      gSounds.freezeOut:setLooping(true)
+      gSounds.freezeOut:setVolume(0.75)
       return gTextures.mountain
+   elseif self.currentLevel >= 9 and self.currentLevel <= 12 then
+      _platform = 3
+      gSounds.freezeOut:stop()
+      gSounds.illuminate:play()
+      gSounds.illuminate:setLooping(true)
+      gSounds.illuminate:setVolume(0.75)
+      return gTextures.cave
    end
 end
 
@@ -61,7 +73,8 @@ function Map:positionCamera(player, camera)
    local halfScreen =  VIRTUAL_WIDTH / 2
    local halfHeight = VIRTUAL_HEIGHT / 2
 
-   if self.currentLevel >= 1 and self.currentLevel <= 4 then
+   if (self.currentLevel >= 1 and self.currentLevel <= 4) or
+   (self.currentLevel >= 9 and self.currentLevel <= 12) then
       if Player.x < (MapWidth - halfScreen) then
          boundX = math.max(0, Player.x - halfScreen)
       else
@@ -70,7 +83,7 @@ function Map:positionCamera(player, camera)
    
       Camera:setPosition(boundX, 0)
       BACKGROUND_SCROLL = (boundX / 3) % 384
-   elseif self.currentLevel == 5 then
+   elseif self.currentLevel == 5 or self.currentLevel == 8 then
       if Player.y < (MapHeight - halfHeight) then
          boundY = math.max(0, Player.y - halfHeight)
       else
@@ -78,7 +91,6 @@ function Map:positionCamera(player, camera)
       end
    
       Camera:setPosition(0, boundY)
-      BACKGROUND_SCROLL = (-boundY / 3) % 384
    end
 end
 
@@ -97,14 +109,19 @@ end
 
 function Map:clean()
    self.level:box2d_removeLayer("solid")
-   Breakable.removeAll()
    Slime.removeAll()
+   Mushroom.removeAll()
+   IceGoblin.removeAll()
+   Rock.removeAll()
+
+   FallingPlatform.removeAll()
    Key.removeAll()
    Lock.removeAll()
    Checkpoint.removeAll()
    Finish.removeAll()
    Spike.removeAll()
    Chocolate.removeAll()
+   Collider.removeAll()
 end
 
 function Map:update(dt)
@@ -130,6 +147,12 @@ function Map:spawnEntities()
 	for i,v in ipairs(self.entityLayer.objects) do
 		if v.type == "slime" then
          Slime:load(v.x + v.width / 2, v.y + v.height / 2)
+      elseif v.type =='mushroom' then
+         Mushroom:load(v.x + v.width / 2, v.y + v.height/2)
+      elseif v.type =='iceGoblin' then
+         IceGoblin:load(v.x + v.width / 2, v.y + v.height/2)
+      elseif v.type =='rock' then
+         Rock:load(v.x + v.width / 2, v.y + v.height/2)
       elseif v.type == 'player' then
          Player:load(v.x + v.width/2, v.y + v.height/2)
 		end
@@ -140,6 +163,8 @@ function Map:spawnObjects()
    for i,v in ipairs(self.objectLayer.objects) do
       if v.type == 'checkpoint' then
          Checkpoint:load(v.x + v.width/2, v.y)
+      elseif v.type == 'collider' then
+         Collider:load(v.x + v.width/2, v.y)
 		end
 	end
 end
@@ -170,10 +195,10 @@ function Map:spawnSpikes()
 	end
 end
 
-function Map:spawnBreakables()
+function Map:spawnFallingPlatform()
    for i,v in ipairs(self.objectLayer.objects) do
 		if v.type == "breakable" then
-         Breakable:load(v.x + v.width/2 , v.y)
+         FallingPlatform:load(v.x + v.width/2 , v.y)
 		end
 	end
 end

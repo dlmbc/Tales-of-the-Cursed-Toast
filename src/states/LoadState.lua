@@ -7,6 +7,7 @@ function LoadState:init()
     playing = true
 
     loaded = true -- we will  load the game
+    Snow:load()
     Map:load()
     GUI:load()
 end
@@ -48,16 +49,24 @@ function LoadState:update(dt)
             end
         else
             World:update(dt)
+
             Player:update(dt)
             Slime.updateAll(dt)
-            Breakable.updateAll(dt)
+            Mushroom.updateAll(dt)
+            IceGoblin.updateAll(dt)
+            Rock.updateAll(dt)
+    
+            FallingPlatform.updateAll(dt)
             Spike.updateAll(dt)
             Key.updateAll(dt)
             Lock.updateAll(dt)
             Checkpoint.updateAll(dt)
             Finish.updateAll(dt)
             Chocolate.updateAll(dt)
+    
+            Snow:update(dt)
             GUI:update(dt)
+    
             Map:positionCamera(self, Player, Camera)
             Map:update(dt)
             if love.keyboard.wasPressed('escape') then
@@ -110,33 +119,46 @@ function LoadState:render()
         else
             love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
 
-            gSounds.tbgm:stop()
-            Map.level:draw(-Camera.x, -Camera.y)
-            Camera:set()
-                Player:draw()
-                Slime.drawAll()
-                Breakable.drawAll()
-                Spike.drawAll()
-                Key.drawAll()
-                Lock.drawAll()
-                Checkpoint.drawAll()
-                Finish.drawAll()
-                Chocolate.drawAll()
-            Camera:unset()
-            GUI:draw()
+        gSounds.aspire:stop()
+
+        Map.level:draw(-Camera.x, -Camera.y)
+        Camera:set()
+            FallingPlatform.drawAll()
+            Spike.drawAll()
+            Key.drawAll()
+            Lock.drawAll()
+            Checkpoint.drawAll()
+            Finish.drawAll()
+            Chocolate.drawAll()
+
+            Slime.drawAll()
+            Mushroom.drawAll()
+            IceGoblin.drawAll()
+            Rock.drawAll()
+            Player:draw()
+        Camera:unset()
+        
+        Snow:draw()
+        GUI:draw()
         end
     end
 end
 
 function LoadState:beginContact(a, b, collision)
-    Breakable.beginContact(a, b, collision)
+    if Key.beginContact(a, b, collision) then return end
+    if Lock.beginContact(a, b, collision) then return end
+    if Checkpoint.beginContact(a, b, collision) then return end
+    if Chocolate.beginContact(a, b, collision) then return end
+    if Collider.beginContact(a, b, collision) then return end
+    if Finish.beginContact(a, b, collision) then return end
+
+    FallingPlatform.beginContact(a, b, collision)
     Spike.beginContact(a, b, collision)
-    Key.beginContact(a, b, collision)
-    Lock.beginContact(a, b, collision)
+    
+    Rock.beginContact(a, b, collision)
+    IceGoblin.beginContact(a, b, collision)
+    Mushroom.beginContact(a, b, collision)
     Slime.beginContact(a, b, collision)
-    Checkpoint.beginContact(a, b, collision)
-    Finish.beginContact(a, b, collision)
-    Chocolate.beginContact(a, b, collision)
     Player:beginContact(a, b, collision)
 end
 

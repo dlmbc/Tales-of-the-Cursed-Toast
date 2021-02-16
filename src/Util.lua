@@ -16,17 +16,3 @@ function GenerateQuads(atlas, tilewidth, tileheight)
 
     return spritesheet
 end
-
-function GenerateQuadsKey(atlas, tilewidth, tileheight)
-    local x = 0
-    local y = 0
-
-    love.graphics.newQuad(x, y, 16, 16, atlas:getDimensions())
-end
-
-function GenerateQuadsLock(atlas)
-    local x = 0
-    local y = 16
-
-    love.graphics.newQuad(x, y, 16, 16, atlas:getDimensions())
-end

@@ -36,6 +36,7 @@ function GUI:draw()
    self:displayHearts()
    self:displayPowerUps()
    self:displayLevel()
+   self:displayFPS()
 end
 
 function GUI:displayHearts()
@@ -71,7 +72,24 @@ end
 
 function GUI:displayLevel()
    love.graphics.setFont(small)
-   love.graphics.printf("Level: " .. Map.currentLevel, 25, 25, VIRTUAL_WIDTH, 'left')
+   if Map.currentLevel >= 5 and Map.currentLevel <= 8 then
+      love.graphics.setColor(0, 0, 0, 1)
+   elseif (Map.currentLevel >= 1 and Map.currentLevel <= 4) or 
+         Map.currentLevel >= 9 and Map.currentLevel <= 12 then
+      love.graphics.setColor(1, 1, 1, 1)
+   end
+   love.graphics.print("Level: " .. Map.currentLevel, VIRTUAL_WIDTH - 150, 10)
+end
+
+function GUI:displayFPS()
+   love.graphics.setFont(small)
+   if Map.currentLevel >= 5 and Map.currentLevel <= 8 then
+      love.graphics.setColor(0, 0, 0, 1)
+   elseif (Map.currentLevel >= 1 and Map.currentLevel <= 4) or 
+         Map.currentLevel >= 9 and Map.currentLevel <= 12 then
+      love.graphics.setColor(1, 1, 1, 1)
+   end
+   love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), VIRTUAL_WIDTH - 90, 10)
 end
 
 return GUI

@@ -1,3 +1,4 @@
+-- library
 -- https://github.com/Ulydev/push
 push = require 'lib/push'
 
@@ -11,25 +12,43 @@ STI  = require 'lib/sti'
 Timer = require 'lib/knife.timer'
 Serialize = require 'lib/knife.serialize'
 
+Camera = require 'lib/camera'
+
+-- World
+Map = require 'src/map'
+
 -- game entities
 Player = require 'src/entities/player'
 Slime = require 'src/entities/slime'
-
-Map = require 'src/map'
-Camera = require 'lib/camera'
-GUI = require 'src/gui/gui'
+Mushroom = require 'src/entities/mushroom'
+IceGoblin = require 'src/entities/iceGoblin'
+Rock = require 'src/entities/rock'
 
 -- game objects
-Breakable = require'src/gameObjects/breakable'
+FallingPlatform = require'src/gameObjects/fallingPlatform'
 Spike = require 'src/gameObjects/spike'
 Key = require 'src/gameObjects/key'
 Lock = require 'src/gameObjects/lock'
 Checkpoint = require 'src/gameObjects/checkpoint'
 Finish = require 'src/gameObjects/finish'
+Collider = require 'src/gameObjects/collider'
+
+-- falling platform 
+_platform = 1
 
 -- power ups
 Chocolate = require 'src/powerups/chocolate'
 
+-- Particle Effect
+Snow = require 'src/snow'
+
+-- Shader
+require 'src/shader'
+
+-- GUI
+GUI = require 'src/gui/gui'
+
+-- game states
 require 'src/StateMachine'
 require 'src/states/BaseState'
 require 'src/states/TitleScreenState'
@@ -44,16 +63,24 @@ require 'src/Animation'
 require 'src/constants'
 require 'src/Util'
 
+-- fonts
 small = love.graphics.newFont('font/font.ttf', 8)
 medium = love.graphics.newFont('font/font.ttf', 16)
 large = love.graphics.newFont('font/font.ttf', 32)
 
+-- sounds
 gSounds = {
-    tbgm = love.audio.newSource('sounds/music/Aspire.mp3', 'stream'),
-    forest = love.audio.newSource('sounds/music/spoon.mp3', 'stream'),
-    jump = love.audio.newSource('sounds/SFX/jump.wav', 'static')
+    aspire = love.audio.newSource('sounds/music/Aspire.mp3', 'stream'),
+    morningDew = love.audio.newSource('sounds/music/Morning Dew.mp3', 'stream'),
+    freezeOut = love.audio.newSource('sounds/music/Freeze Out.mp3', 'stream'),
+    illuminate = love.audio.newSource('sounds/music/Illuminate.mp3', 'stream'),
+    hex = love.audio.newSource('sounds/music/Hex.mp3', 'stream'),
+
+    jump = love.audio.newSource('sounds/SFX/jump.wav', 'static'),
+    wind = love.audio.newSource('sounds/SFX/wind.wav', 'static')
 }
 
+-- source images
 gTextures = {
     background = love.graphics.newImage('graphics/background/Title.png'),
     forest = love.graphics.newImage('graphics/background/Forest.png'),
@@ -69,18 +96,33 @@ gTextures = {
 
     toast = love.graphics.newImage('graphics/toastSprite.png'),
     slime = love.graphics.newImage('graphics/slime.png'),
+    mushroom = love.graphics.newImage('graphics/mushroom.png'),
+    iceGoblin = love.graphics.newImage('graphics/iceGoblin.png'),
+    rock = love.graphics.newImage('graphics/rocks.png'),
+
     keyLock = love.graphics.newImage('graphics/key_lock.png'),
     flag = love.graphics.newImage('graphics/flag.png'),
     checkpoint = love.graphics.newImage('graphics/checkpoint.png'),
     spike = love.graphics.newImage('graphics/spike.png'),
-    chocolate = love.graphics.newImage('graphics/chocolate.png')
+    chocolate = love.graphics.newImage('graphics/chocolate.png'),
+    platform = love.graphics.newImage('graphics/breakable.png'),
+
+    snow = love.graphics.newImage('graphics/snow.png')
 }
 
+-- quads
 gFrames = {
     arrow = GenerateQuads(gTextures.arrow, 4, 5),
     logo = GenerateQuads(gTextures.logo, 384, 224),
+    
     toast = GenerateQuads(gTextures.toast, 16, 16),
     slime = GenerateQuads(gTextures.slime, 16, 13),
+    mushroom = GenerateQuads(gTextures.mushroom, 16, 16),
+    iceGoblin = GenerateQuads(gTextures.iceGoblin, 16, 16),
+    rock = GenerateQuads(gTextures.rock, 16, 16),
+
     keyLock = GenerateQuads(gTextures.keyLock, 16, 16),
+    platform = GenerateQuads(gTextures.platform, 16, 8),
+
     chocolate = GenerateQuads(gTextures.chocolate, 16, 16)
 }

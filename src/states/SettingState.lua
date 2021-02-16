@@ -31,9 +31,9 @@ function SettingState:update(dt)
     if (love.keyboard.wasPressed('d') or love.keyboard.wasPressed('a')) and highlighted == 2 then
         bgmNext = bgmNext == 1 and 2 or 1
         if bgmNext == 1 then
-            gSounds.tbgm:play()
+            gSounds.aspire:play()
         elseif bgmNext == 2 then
-            gSounds.tbgm:pause()
+            gSounds.aspire:pause()
         end
     end
 
