@@ -13,3 +13,13 @@ https://github.com/vrld/hump/blob/master/class.lua
 https://github.com/karai17/Simple-Tiled-Implementation
 
 https://github.com/airstruck/knife
+
+-- Members --
+
+John Loyd Adobas
+
+Alejandro Babilonia
+
+Erica Delambaca
+
+Kris Anne Del Prado
