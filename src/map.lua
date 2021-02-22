@@ -60,10 +60,13 @@ function Map:backGround()
 end
 
 function Map:levelKeyLockSpawn()
-   if self.currentLevel >= 1 and self.currentLevel <= 3 then
-      self:spawnFinish()
+   if self.currentLevel >= 1 and self.currentLevel <= 3 or
+      self.currentLevel >= 5 and self.currentLevel <= 7 or
+      self.currentLevel >= 9 and self.currentLevel <= 11 then
+         self:spawnFinish()
    end  
-   if self.currentLevel == 4 then
+
+   if self.currentLevel == 4 and self.currentLevel == 8 and self.currentLevel == 12 then
       self:spawnKeyLock()
    end
 end

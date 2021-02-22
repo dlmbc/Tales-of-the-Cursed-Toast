@@ -22,7 +22,8 @@ function love.load()
 		['play'] = function() return PlayState() end,
 		['credits'] = function() return CreditState() end,
 		['logo-play'] = function() return StartState() end,
-		['load'] = function() return LoadState() end
+		['load'] = function() return LoadState() end,
+		['intro'] = function() return MessageIntro() end
 	}
 	gStateMachine:change('logo-play')
 
@@ -53,7 +54,15 @@ end
 
 function love.draw()
 	push:start()
-	if play == true then
+	if Map.currentLevel == nil then
+		gStateMachine:render()
+
+	else
+		if (Map.currentLevel >= 1 and Map.currentLevel <= 8) or
+			(Map.currentLevel >= 13 and Map.currentLevel <= 16) then
+			gStateMachine:render()
+		end
+
 		if Map.currentLevel >= 9 and Map.currentLevel <= 12 then
 			love.graphics.setShader(shader)
 			shader:send('screen', {
@@ -74,12 +83,6 @@ function love.draw()
 				gStateMachine:render()
 			love.graphics.setShader()
 		end
-		if (Map.currentLevel >= 1 and Map.currentLevel <= 8) or
-			(Map.currentLevel >= 13 or Map.currentLevel <= 16) then
-			gStateMachine:render()
-		end
-	else
-		gStateMachine:render()
 	end
 	push:finish()
 end

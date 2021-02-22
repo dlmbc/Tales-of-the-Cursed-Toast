@@ -63,6 +63,8 @@ require 'src/Animation'
 require 'src/constants'
 require 'src/Util'
 
+require 'src/gui/text/intro'
+
 -- fonts
 small = love.graphics.newFont('font/font.ttf', 8)
 medium = love.graphics.newFont('font/font.ttf', 16)
@@ -77,7 +79,10 @@ gSounds = {
     hex = love.audio.newSource('sounds/music/Hex.mp3', 'stream'),
 
     jump = love.audio.newSource('sounds/SFX/jump.wav', 'static'),
-    wind = love.audio.newSource('sounds/SFX/wind.wav', 'static')
+    wind = love.audio.newSource('sounds/SFX/wind.wav', 'static'),
+    select = love.audio.newSource('sounds/SFX/Select.wav', 'static'),
+    hit = love.audio.newSource('sounds/SFX/hit.wav', 'static'),
+    nextLevel = love.audio.newSource('sounds/SFX/levelup.wav', 'static')
 }
 
 -- source images
@@ -93,6 +98,7 @@ gTextures = {
     
     logo = love.graphics.newImage('graphics/logo.png'),
     kaje = love.graphics.newImage('graphics/KAJElogo.png'),
+    firstScene = love.graphics.newImage('graphics/firstScene.png'),
 
     toast = love.graphics.newImage('graphics/toastSprite.png'),
     slime = love.graphics.newImage('graphics/slime.png'),
@@ -114,6 +120,7 @@ gTextures = {
 gFrames = {
     arrow = GenerateQuads(gTextures.arrow, 4, 5),
     logo = GenerateQuads(gTextures.logo, 384, 224),
+    firstScene = GenerateQuads(gTextures.firstScene, 384, 224),
     
     toast = GenerateQuads(gTextures.toast, 16, 16),
     slime = GenerateQuads(gTextures.slime, 16, 13),

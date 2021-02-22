@@ -12,12 +12,16 @@ end
 
 function SettingState:update(dt)
     if love.keyboard.wasPressed('s') then
+        gSounds.select:play()
+        gSounds.select:setVolume(0.5)
         highlighted = highlighted + 1
         if highlighted > 3 then
             highlighted = 1
         end
 
     elseif love.keyboard.wasPressed('w') then
+        gSounds.select:play()
+        gSounds.select:setVolume(0.5)
         highlighted = highlighted - 1
         if highlighted < 1 then
             highlighted = 1

@@ -48,15 +48,11 @@ function Rock:loadAssets()
    self.animation.walk = Animation {
       frames = {1,2,3,4},
       interval = 0.1,
-      width = self.width,
-      height = self.width
    }
 
    self.animation.run = Animation {
       frames = {1,2,3,4},
       interval = 0.1,
-      width = self.width,
-      height = self.width
    }
 
    self.currentAnimation = self.animation[self.state]
@@ -84,7 +80,7 @@ function Rock:increaseSpeed()
       self.state = 'run'
       self.currentAnimation = self.animation[self.state]
       self.speedMod = 3
-      Timer.after(3, function() self.speedCounter = 0 end)
+      self.speedCounter = 0
    else
       self.state = 'walk'
       self.currentAnimation = self.animation[self.state]
@@ -100,7 +96,6 @@ end
 
 function Rock:update(dt)
    if playing == true then
-      Timer.update(dt)
       self:syncPhysics()
       self.currentAnimation:update(dt)
       self:normalColor(dt)
@@ -124,7 +119,7 @@ function Rock:draw()
    love.graphics.setColor(self.color.blue, self.color.red, self.color.green)
    love.graphics.draw(
       gTextures.rock, gFrames.rock[self.currentAnimation:getCurrentFrame()],
-      self.x, self.y, 0, scaleX, 1, self.currentAnimation.width/2, self.currentAnimation.height/2
+      self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
    )
    love.graphics.setColor(1,1,1,1)
 end

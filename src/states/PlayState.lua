@@ -10,6 +10,8 @@ function PlayState:init()
     Snow:load()
     Map:load()
     GUI:load()
+
+    intro:load()
 end
 
 -- function 
@@ -43,32 +45,37 @@ function PlayState:update(dt)
             end
         end
     else
-        World:update(dt)
+        if dialog_finished == false then
+            intro:update(dt)
 
-        Player:update(dt)
-        Slime.updateAll(dt)
-        Mushroom.updateAll(dt)
-        IceGoblin.updateAll(dt)
-        Rock.updateAll(dt)
+        else
+            World:update(dt)
 
-        FallingPlatform.updateAll(dt)
-        Spike.updateAll(dt)
-        Key.updateAll(dt)
-        Lock.updateAll(dt)
-        Checkpoint.updateAll(dt)
-        Finish.updateAll(dt)
-        Chocolate.updateAll(dt)
+            Player:update(dt)
+            Slime.updateAll(dt)
+            Mushroom.updateAll(dt)
+            IceGoblin.updateAll(dt)
+            Rock.updateAll(dt)
 
-        Snow:update(dt)
-        GUI:update(dt)
+            FallingPlatform.updateAll(dt)
+            Spike.updateAll(dt)
+            Key.updateAll(dt)
+            Lock.updateAll(dt)
+            Checkpoint.updateAll(dt)
+            Finish.updateAll(dt)
+            Chocolate.updateAll(dt)
 
-        Map:positionCamera(self, Player, Camera)
-        Map:update(dt)
-        if love.keyboard.wasPressed('escape') then
-            if playing then
-                playing = false
-            else
-                playing = true
+            Snow:update(dt)
+            GUI:update(dt)
+
+            Map:positionCamera(self, Player, Camera)
+            Map:update(dt)
+            if love.keyboard.wasPressed('escape') then
+                if playing then
+                    playing = false
+                else
+                    playing = true
+                end
             end
         end
     end
@@ -108,29 +115,33 @@ function PlayState:render()
                 love.graphics.setColor(1, 1, 1, 1)
         end
     else
-        love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
+        if dialog_finished == false then
+            intro:draw()
+        else
+            love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
 
-        gSounds.aspire:stop()
+            gSounds.aspire:stop()
 
-        Map.level:draw(-Camera.x, -Camera.y)
-        Camera:set()
-            FallingPlatform.drawAll()
-            Spike.drawAll()
-            Key.drawAll()
-            Lock.drawAll()
-            Checkpoint.drawAll()
-            Finish.drawAll()
-            Chocolate.drawAll()
+            Map.level:draw(-Camera.x, -Camera.y)
+            Camera:set()
+                FallingPlatform.drawAll()
+                Spike.drawAll()
+                Key.drawAll()
+                Lock.drawAll()
+                Checkpoint.drawAll()
+                Finish.drawAll()
+                Chocolate.drawAll()
 
-            Slime.drawAll()
-            Mushroom.drawAll()
-            IceGoblin.drawAll()
-            Rock.drawAll()
-            Player:draw()
-        Camera:unset()
-        
-        Snow:draw()
-        GUI:draw()
+                Slime.drawAll()
+                Mushroom.drawAll()
+                IceGoblin.drawAll()
+                Rock.drawAll()
+                Player:draw()
+            Camera:unset()
+            
+            Snow:draw()
+            GUI:draw()
+        end
     end
 end
 

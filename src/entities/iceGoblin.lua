@@ -49,16 +49,12 @@ function IceGoblin:loadAssets()
 
    self.animation.walk = Animation {
       frames = {1,2,3,4},
-      interval = 0.1,
-      width = self.width,
-      height = self.width
+      interval = 0.1
    }
 
    self.animation.run = Animation {
       frames = {1,2,3,4},
-      interval = 0.1,
-      width = self.width,
-      height = self.width
+      interval = 0.1
    }
 
    self.currentAnimation = self.animation[self.state]
@@ -88,7 +84,7 @@ function IceGoblin:increaseSpeed()
       self.state = 'run'
       self.currentAnimation = self.animation[self.state]
       self.speedMod = 3
-      Timer.after(3, function() self.speedCounter = 0 end)
+      self.speedCounter = 0
    else
       self.state = 'walk'
       self.currentAnimation = self.animation[self.state]
@@ -105,7 +101,6 @@ end
 
 function IceGoblin:update(dt)
    if playing == true then
-      Timer.update(dt)
       self:syncPhysics()
       self.currentAnimation:update(dt)
       self:normalColor(dt)
@@ -124,13 +119,15 @@ end
 
 function IceGoblin:draw()
    local scaleX = 1
+
    if self.dx < 0 then
       scaleX = -1
    end
+
    love.graphics.setColor(self.color.blue, self.color.red, self.color.green)
    love.graphics.draw(
       gTextures.iceGoblin, gFrames.iceGoblin[self.currentAnimation:getCurrentFrame()],
-      self.x, self.y, 0, scaleX, 1, self.currentAnimation.width/2, self.currentAnimation.height/2
+      self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
    )
    love.graphics.setColor(1,1,1,1)
 end

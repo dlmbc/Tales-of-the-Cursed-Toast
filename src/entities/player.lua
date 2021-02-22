@@ -60,7 +60,6 @@ function Player:load(x, y)
    self.character.body:setGravityScale(1)
 end
 
-
 --[[
    this is for the animation 
 --]]
@@ -110,7 +109,7 @@ function Player:respawn()
       self:resetPosition()
       self.health.current = self.health.max
       self.alive = true
-      Map:spawnObjects()
+      Map:spawnKeyLock()
    end
 end
 

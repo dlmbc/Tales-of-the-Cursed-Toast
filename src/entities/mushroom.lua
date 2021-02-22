@@ -85,7 +85,7 @@ function Mushroom:increaseSpeed()
       self.state = 'run'
       self.currentAnimation = self.animation[self.state]
       self.speedMod = 3
-      Timer.after(3, function() self.speedCounter = 0 end)
+      self.speedCounter = 0
    else
       self.state = 'walk'
       self.currentAnimation = self.animation[self.state]
@@ -101,7 +101,6 @@ end
 
 function Mushroom:update(dt)
    if playing == true then
-      Timer.update(dt)
       self:syncPhysics()
       self.currentAnimation:update(dt)
       self:normalColor(dt)

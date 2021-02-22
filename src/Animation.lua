@@ -13,8 +13,6 @@ Animation = Class{}
 function Animation:init(def)
     self.frames = def.frames
     self.interval = def.interval
-    self.width = def.width
-    self.height = def.height
     self.timer = 0
     self.currentFrame = 1
 end

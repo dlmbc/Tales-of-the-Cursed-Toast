@@ -35,7 +35,7 @@ function Slime:load(x, y)
    self.physics.body = love.physics.newBody(World, self.x, self.y, 'dynamic')
    self.physics.body:setFixedRotation(true)
    self.physics.body:setMass(25)
-   self.physics.shape = love.physics.newRectangleShape(self.width, self.height * 0.75)
+   self.physics.shape = love.physics.newRectangleShape(self.width * 0.4, self.height * 0.75)
    self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
     
    table.insert(ActiveSlime, self)
@@ -85,7 +85,7 @@ function Slime:increaseSpeed()
       self.state = 'run'
       self.currentAnimation = self.animation[self.state]
       self.speedMod = 3
-      Timer.after(3, function() self.speedCounter = 0 end)
+      self.speedCounter = 0
    else
       self.state = 'walk'
       self.currentAnimation = self.animation[self.state]
@@ -101,7 +101,6 @@ end
 
 function Slime:update(dt)
    if playing == true then
-      Timer.update(dt)
       self:syncPhysics()
       self.currentAnimation:update(dt)
       self:normalColor(dt)
@@ -119,16 +118,16 @@ end
 
 function Slime:draw()
    local scaleX = 1
-   
+
    if self.dx < 0 then
       scaleX = -1
    end
 
    love.graphics.setColor(self.color.blue, self.color.red, self.color.green)
-      love.graphics.draw(
-         gTextures.slime, gFrames.slime[self.currentAnimation:getCurrentFrame()],
-         self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
-      )
+   love.graphics.draw(
+      gTextures.slime, gFrames.slime[self.currentAnimation:getCurrentFrame()],
+      self.x, self.y, 0, scaleX, 1, self.width/2, self.height/2
+   )
    love.graphics.setColor(1,1,1,1)
 end
 
