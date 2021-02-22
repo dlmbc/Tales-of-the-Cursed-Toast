@@ -35,7 +35,7 @@ function IceGoblin:load(x, y)
    self.physics.body = love.physics.newBody(World, self.x, self.y, 'dynamic')
    self.physics.body:setFixedRotation(true)
    self.physics.body:setMass(25)
-   self.physics.shape = love.physics.newRectangleShape(self.width * 0.4, self.height * 0.75)
+   self.physics.shape = love.physics.newRectangleShape(self.width, self.height * 0.75)
    self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
     
    table.insert(ActiveIceGoblins, self)

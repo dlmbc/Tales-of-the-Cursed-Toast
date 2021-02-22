@@ -9,6 +9,8 @@ loaded = false -- no load game
 shader = love.graphics.newShader(Shader)
 
 function love.load()
+	love.mouse.setVisible(false)
+
 	push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
 		fullscreen = false,
 		resizable = false,
@@ -23,7 +25,7 @@ function love.load()
 		['credits'] = function() return CreditState() end,
 		['logo-play'] = function() return StartState() end,
 		['load'] = function() return LoadState() end,
-		['intro'] = function() return MessageIntro() end
+		['ending'] = function() return EndingState() end
 	}
 	gStateMachine:change('logo-play')
 

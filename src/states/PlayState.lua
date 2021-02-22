@@ -12,6 +12,7 @@ function PlayState:init()
     GUI:load()
 
     intro:load()
+    outro:load()
 end
 
 -- function 
@@ -45,36 +46,41 @@ function PlayState:update(dt)
             end
         end
     else
-        if dialog_finished == false then
-            intro:update(dt)
+        if GUI.mailNum == 1 then
+            outro:update(dt)
+        elseif GUI.mailNum == 0 then
+            if dialog_finished == false then
+                intro:update(dt)
 
-        else
-            World:update(dt)
+            else
+                World:update(dt)
 
-            Player:update(dt)
-            Slime.updateAll(dt)
-            Mushroom.updateAll(dt)
-            IceGoblin.updateAll(dt)
-            Rock.updateAll(dt)
+                Player:update(dt)
+                Slime.updateAll(dt)
+                Mushroom.updateAll(dt)
+                IceGoblin.updateAll(dt)
+                Rock.updateAll(dt)
 
-            FallingPlatform.updateAll(dt)
-            Spike.updateAll(dt)
-            Key.updateAll(dt)
-            Lock.updateAll(dt)
-            Checkpoint.updateAll(dt)
-            Finish.updateAll(dt)
-            Chocolate.updateAll(dt)
+                FallingPlatform.updateAll(dt)
+                Spike.updateAll(dt)
+                Key.updateAll(dt)
+                Lock.updateAll(dt)
+                Checkpoint.updateAll(dt)
+                Finish.updateAll(dt)
+                Mail.updateAll(dt)
+                Chocolate.updateAll(dt)
 
-            Snow:update(dt)
-            GUI:update(dt)
+                Snow:update(dt)
+                GUI:update(dt)
 
-            Map:positionCamera(self, Player, Camera)
-            Map:update(dt)
-            if love.keyboard.wasPressed('escape') then
-                if playing then
-                    playing = false
-                else
-                    playing = true
+                Map:positionCamera(self, Player, Camera)
+                Map:update(dt)
+                if love.keyboard.wasPressed('escape') then
+                    if playing then
+                        playing = false
+                    else
+                        playing = true
+                    end
                 end
             end
         end
@@ -115,32 +121,38 @@ function PlayState:render()
                 love.graphics.setColor(1, 1, 1, 1)
         end
     else
-        if dialog_finished == false then
-            intro:draw()
-        else
-            love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
-
-            gSounds.aspire:stop()
-
-            Map.level:draw(-Camera.x, -Camera.y)
-            Camera:set()
-                FallingPlatform.drawAll()
-                Spike.drawAll()
-                Key.drawAll()
-                Lock.drawAll()
-                Checkpoint.drawAll()
-                Finish.drawAll()
-                Chocolate.drawAll()
-
-                Slime.drawAll()
-                Mushroom.drawAll()
-                IceGoblin.drawAll()
-                Rock.drawAll()
-                Player:draw()
-            Camera:unset()
+        if GUI.mailNum == 1 then
+            outro:draw()
             
-            Snow:draw()
-            GUI:draw()
+        elseif GUI.mailNum == 0 then
+            if dialog_finished == false then
+                intro:draw()
+            else
+                love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
+
+                gSounds.aspire:stop()
+
+                Map.level:draw(-Camera.x, -Camera.y)
+                Camera:set()
+                    FallingPlatform.drawAll()
+                    Spike.drawAll()
+                    Key.drawAll()
+                    Lock.drawAll()
+                    Checkpoint.drawAll()
+                    Finish.drawAll()
+                    Mail.drawAll()
+                    Chocolate.drawAll()
+
+                    Slime.drawAll()
+                    Mushroom.drawAll()
+                    IceGoblin.drawAll()
+                    Rock.drawAll()
+                    Player:draw()
+                Camera:unset()
+                
+                Snow:draw()
+                GUI:draw()
+            end
         end
     end
 end
@@ -152,6 +164,7 @@ function PlayState:beginContact(a, b, collision)
     if Chocolate.beginContact(a, b, collision) then return end
     if Collider.beginContact(a, b, collision) then return end
     if Finish.beginContact(a, b, collision) then return end
+    if Mail.beginContact(a, b, collision) then return end
 
     FallingPlatform.beginContact(a, b, collision)
     Spike.beginContact(a, b, collision)

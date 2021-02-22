@@ -32,6 +32,7 @@ Lock = require 'src/gameObjects/lock'
 Checkpoint = require 'src/gameObjects/checkpoint'
 Finish = require 'src/gameObjects/finish'
 Collider = require 'src/gameObjects/collider'
+Mail = require 'src/gameObjects/mail'
 
 -- falling platform 
 _platform = 1
@@ -58,12 +59,14 @@ require 'src/states/CreditState'
 require 'src/states/HowToPlayState'
 require 'src/states/StartState'
 require 'src/states/LoadState'
+require 'src/states/EndingState'
 
 require 'src/Animation'
 require 'src/constants'
 require 'src/Util'
 
 require 'src/gui/text/intro'
+require 'src/gui/text/outro'
 
 -- fonts
 small = love.graphics.newFont('font/font.ttf', 8)
@@ -112,6 +115,7 @@ gTextures = {
     spike = love.graphics.newImage('graphics/spike.png'),
     chocolate = love.graphics.newImage('graphics/chocolate.png'),
     platform = love.graphics.newImage('graphics/breakable.png'),
+    mail = love.graphics.newImage('graphics/mail.png'),
 
     snow = love.graphics.newImage('graphics/snow.png')
 }

@@ -1,9 +1,12 @@
 intro = {}
 
-local msg = "You were once a person but you have been curse.\n"
-            .. "You will live your life as a bread, but ...\n"
+local msg = "You were once a person but you have been curse."
+            .. "          \n"
+            .. "You will live your life as a bread, but ..."
+            .. "          \n"
             .. "You can walk, you can jump and you can use power ups with the help\n"
-            .. "of the fairy who knew that a witch cursed you . \n\n"
+            .. "of the fairy who knew that a witch cursed you. \n\n"
+            .. "          "
             .. "You must journey through the lands to get to that witch \n"
             .. "Either you become human again or live as a bread is all up to you."
             .. "            "

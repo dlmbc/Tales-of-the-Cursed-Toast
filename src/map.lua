@@ -56,6 +56,12 @@ function Map:backGround()
       gSounds.illuminate:setLooping(true)
       gSounds.illuminate:setVolume(0.75)
       return gTextures.cave
+   elseif self.currentLevel == 13 then
+      _platform = 4
+      gSounds.illuminate:stop()
+      gSounds.hex:play()
+      gSounds.hex:setVolume(0.75)
+      return gTextures.kitchen
    end
 end
 
@@ -75,9 +81,11 @@ function Map:positionCamera(player, camera)
    local halfScreen =  VIRTUAL_WIDTH / 2
    local halfHeight = VIRTUAL_HEIGHT / 2
 
-   if (self.currentLevel >= 1 and self.currentLevel <= 4) or
-   (self.currentLevel >= 9 and self.currentLevel <= 12) then
-      if Player.x < (MapWidth - halfScreen) then
+   if (self.currentLevel >= 1 and self.currentLevel <= 4) or 
+      (self.currentLevel == 6 or self.currentLevel == 7) or
+      (self.currentLevel >= 9 and self.currentLevel <= 12) then
+      
+         if Player.x < (MapWidth - halfScreen) then
          boundX = math.max(0, Player.x - halfScreen)
       else
          boundX = math.min(Player.x - halfScreen, MapWidth - VIRTUAL_WIDTH)
@@ -85,6 +93,7 @@ function Map:positionCamera(player, camera)
    
       Camera:setPosition(boundX, 0)
       BACKGROUND_SCROLL = (boundX / 3) % 384
+
    elseif self.currentLevel == 5 or self.currentLevel == 8 then
       if Player.y < (MapHeight - halfHeight) then
          boundY = math.max(0, Player.y - halfHeight)
@@ -168,6 +177,11 @@ function Map:spawnObjects()
       elseif v.type == 'collider' then
          Collider:load(v.x + v.width/2, v.y)
 		end
+      if self.currentLevel == 13 then
+         if v.type == 'mail' then
+            Mail:load(v.x + v.width/2, v.y + v.height/2)
+         end
+      end
 	end
 end
 

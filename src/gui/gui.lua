@@ -10,6 +10,7 @@ function GUI:load()
    self.keyNum = 0
    self.lockNum = 0
    self.flagNum = 0
+   self.mailNum = 0
    self.chocoNum = 0
    self.cheeseNum = 0
 

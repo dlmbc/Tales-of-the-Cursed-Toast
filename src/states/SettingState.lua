@@ -24,7 +24,7 @@ function SettingState:update(dt)
         gSounds.select:setVolume(0.5)
         highlighted = highlighted - 1
         if highlighted < 1 then
-            highlighted = 1
+            highlighted = 3
         end
     end
 
