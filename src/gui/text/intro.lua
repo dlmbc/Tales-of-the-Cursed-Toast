@@ -1,13 +1,14 @@
 intro = {}
 
--- local msg = "You were once a person but you have been curse.\n"
---             .. "You will live your life as a bread, but ...\n"
---             .. "You can walk, you can jump and you can use power ups with the help\n"
---             .. "of the fairy who knew that a witch cursed you . \n\n"
---             .. "You must journey through the lands to get to that witch \n"
---             .. "Either you become human again or live as a bread is all up to you."
+local msg = "You were once a person but you have been curse.\n"
+            .. "You will live your life as a bread, but ...\n"
+            .. "You can walk, you can jump and you can use power ups with the help\n"
+            .. "of the fairy who knew that a witch cursed you . \n\n"
+            .. "You must journey through the lands to get to that witch \n"
+            .. "Either you become human again or live as a bread is all up to you."
+            .. "            "
 
-local msg = 'hello world               '..'    '
+-- local msg = 'hello world               '..'    '
 function intro:load()
     dialog_message = msg
     dialog_length = 0
@@ -73,7 +74,7 @@ function intro:draw()
                 love.graphics.setColor(0,0,0,1)
                     love.graphics.rectangle('fill', 10, VIRTUAL_HEIGHT - 20, small:getWidth(msg_skip) + 6, 20, 4)
                 love.graphics.setColor(1,1,1,1)
-                
+
                 love.graphics.print(msg_skip, 13, VIRTUAL_HEIGHT - 15)
             else
                 love.graphics.setColor(1, 1, 1, self.transitionAlpha)
