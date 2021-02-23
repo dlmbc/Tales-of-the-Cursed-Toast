@@ -27,7 +27,7 @@ function love.load()
 		['load'] = function() return LoadState() end,
 		['ending'] = function() return EndingState() end
 	}
-	gStateMachine:change('ending')
+	gStateMachine:change('logo-play')
 
 	gSounds.aspire:play()
 	gSounds.aspire:setLooping(true)
