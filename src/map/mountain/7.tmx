@@ -44,12 +44,6 @@
   <object id="203" name="Ice" type="ice" x="8016" y="192" width="16" height="16">
    <ellipse/>
   </object>
-  <object id="216" name="Ice Goblin" type="iceGoblin" x="2416" y="160" width="16" height="16">
-   <ellipse/>
-  </object>
-  <object id="217" name="Ice Goblin" type="iceGoblin" x="2512" y="160" width="16" height="16">
-   <ellipse/>
-  </object>
   <object id="218" name="Ice Goblin" type="iceGoblin" x="2624" y="160" width="16" height="16">
    <ellipse/>
   </object>
@@ -109,10 +103,6 @@
   <object id="207" name="Spike" type="spike" x="5536" y="192" width="16" height="16"/>
   <object id="208" name="Spike" type="spike" x="5344" y="192" width="16" height="16"/>
   <object id="209" name="Spike" type="spike" x="5360" y="192" width="16" height="16"/>
-  <object id="210" name="Enemy Collider" type="collider" x="2575" y="160" width="1" height="16"/>
-  <object id="211" name="Enemy Collider" type="collider" x="2496" y="160" width="1" height="16"/>
-  <object id="212" name="Enemy Collider" type="collider" x="2463" y="160" width="1" height="16"/>
-  <object id="213" name="Enemy Collider" type="collider" x="2400" y="160" width="1" height="16"/>
   <object id="214" name="Enemy Collider" type="collider" x="2608" y="160" width="1" height="16"/>
   <object id="215" name="Enemy Collider" type="collider" x="2687" y="160" width="1" height="16"/>
   <object id="224" name="Enemy Collider" type="collider" x="5871" y="176" width="1" height="16"/>

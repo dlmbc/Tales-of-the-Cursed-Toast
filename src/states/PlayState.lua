@@ -46,42 +46,43 @@ function PlayState:update(dt)
             end
         end
     else
-        if GUI.mailNum == 1 then
-            outro:update(dt)
-        elseif GUI.mailNum == 0 then
-            if dialog_finished == false then
-                intro:update(dt)
-
+        if love.keyboard.wasPressed('escape') then
+            if playing then
+                playing = false
             else
-                World:update(dt)
+                playing = true
+            end
+        end
+        
+        if dialog_finished == false then
+            intro:update(dt)
 
-                Player:update(dt)
-                Slime.updateAll(dt)
-                Mushroom.updateAll(dt)
-                IceGoblin.updateAll(dt)
-                Rock.updateAll(dt)
+        else
+            World:update(dt)
 
-                FallingPlatform.updateAll(dt)
-                Spike.updateAll(dt)
-                Key.updateAll(dt)
-                Lock.updateAll(dt)
-                Checkpoint.updateAll(dt)
-                Finish.updateAll(dt)
-                Mail.updateAll(dt)
-                Chocolate.updateAll(dt)
+            Player:update(dt)
+            Slime.updateAll(dt)
+            Mushroom.updateAll(dt)
+            IceGoblin.updateAll(dt)
+            Rock.updateAll(dt)
 
-                Snow:update(dt)
-                GUI:update(dt)
+            FallingPlatform.updateAll(dt)
+            Spike.updateAll(dt)
+            Key.updateAll(dt)
+            Lock.updateAll(dt)
+            Checkpoint.updateAll(dt)
+            Finish.updateAll(dt)
+            Mail.updateAll(dt)
+            Chocolate.updateAll(dt)
 
-                Map:positionCamera(self, Player, Camera)
-                Map:update(dt)
-                if love.keyboard.wasPressed('escape') then
-                    if playing then
-                        playing = false
-                    else
-                        playing = true
-                    end
-                end
+            Snow:update(dt)
+            GUI:update(dt)
+
+            Map:positionCamera(self, Player, Camera)
+            Map:update(dt)
+
+            if GUI.mailNum == 1 then
+                outro:update(dt)
             end
         end
     end
@@ -120,38 +121,38 @@ function PlayState:render()
                 love.graphics.printf('Exit', 125, 135, VIRTUAL_WIDTH, 'left')
                 love.graphics.setColor(1, 1, 1, 1)
         end
-    else
-        if GUI.mailNum == 1 then
-            outro:draw()
-            
-        elseif GUI.mailNum == 0 then
-            if dialog_finished == false then
-                intro:draw()
-            else
-                love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
+    else    
+        if dialog_finished == false then
+            intro:draw()
 
-                gSounds.aspire:stop()
+        else
+            love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
 
-                Map.level:draw(-Camera.x, -Camera.y)
-                Camera:set()
-                    FallingPlatform.drawAll()
-                    Spike.drawAll()
-                    Key.drawAll()
-                    Lock.drawAll()
-                    Checkpoint.drawAll()
-                    Finish.drawAll()
-                    Mail.drawAll()
-                    Chocolate.drawAll()
+            gSounds.aspire:stop()
 
-                    Slime.drawAll()
-                    Mushroom.drawAll()
-                    IceGoblin.drawAll()
-                    Rock.drawAll()
-                    Player:draw()
-                Camera:unset()
+            Map.level:draw(-Camera.x, -Camera.y)
+            Camera:set()
+                FallingPlatform.drawAll()
+                Spike.drawAll()
+                Key.drawAll()
+                Lock.drawAll()
+                Checkpoint.drawAll()
+                Finish.drawAll()
+                Mail.drawAll()
+                Chocolate.drawAll()
+
+                Slime.drawAll()
+                Mushroom.drawAll()
+                IceGoblin.drawAll()
+                Rock.drawAll()
+                Player:draw()
+            Camera:unset()
                 
-                Snow:draw()
-                GUI:draw()
+            Snow:draw()
+            GUI:draw()
+
+            if GUI.mailNum == 1 then
+                outro:draw()
             end
         end
     end

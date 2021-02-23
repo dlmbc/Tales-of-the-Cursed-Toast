@@ -8,6 +8,9 @@ function IceGoblin:load(x, y)
    self.x = x
    self.y = y
 
+   self.startX = self.x
+   self.startY = self.y
+
    self.width = 16
    self.height = 16
 
@@ -99,8 +102,16 @@ function IceGoblin:normalColor(dt)
    self.color.blue = math.min(self.color.blue + self.color.speed * dt, 1)
 end
 
+function IceGoblin:resetPosition()
+   self.physics.body:setPosition(self.startX, self.startY)
+end
+
 function IceGoblin:update(dt)
    if playing == true then
+      if self.height > MapHeight then
+         self:resetPosition()
+      end
+
       self:syncPhysics()
       self.currentAnimation:update(dt)
       self:normalColor(dt)

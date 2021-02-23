@@ -57,6 +57,8 @@ function Snow:update(dt)
             self.snow:stop()
             self.snow:reset()
         end
+    else
+        self.snow:stop()
     end
 
     self.snow:update(dt)

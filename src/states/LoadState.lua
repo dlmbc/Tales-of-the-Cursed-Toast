@@ -10,6 +10,8 @@ function LoadState:init()
     Snow:load()
     Map:load()
     GUI:load()
+
+    outro:load()
 end
 
 -- function 
@@ -48,6 +50,14 @@ function LoadState:update(dt)
                 end
             end
         else
+            if love.keyboard.wasPressed('escape') then
+                if playing then
+                    playing = false
+                else
+                    playing = true
+                end
+            end
+
             World:update(dt)
 
             Player:update(dt)
@@ -62,6 +72,7 @@ function LoadState:update(dt)
             Lock.updateAll(dt)
             Checkpoint.updateAll(dt)
             Finish.updateAll(dt)
+            Mail.updateAll(dt)
             Chocolate.updateAll(dt)
     
             Snow:update(dt)
@@ -69,12 +80,8 @@ function LoadState:update(dt)
     
             Map:positionCamera(self, Player, Camera)
             Map:update(dt)
-            if love.keyboard.wasPressed('escape') then
-                if playing then
-                    playing = false
-                else
-                    playing = true
-                end
+            if GUI.mailNum == 1 then
+                outro:update(dt)
             end
         end
     end
@@ -119,27 +126,32 @@ function LoadState:render()
         else
             love.graphics.draw(Map:backGround(), -BACKGROUND_SCROLL)
 
-        gSounds.aspire:stop()
+            gSounds.aspire:stop()
 
-        Map.level:draw(-Camera.x, -Camera.y)
-        Camera:set()
-            FallingPlatform.drawAll()
-            Spike.drawAll()
-            Key.drawAll()
-            Lock.drawAll()
-            Checkpoint.drawAll()
-            Finish.drawAll()
-            Chocolate.drawAll()
+            Map.level:draw(-Camera.x, -Camera.y)
+            Camera:set()
+                FallingPlatform.drawAll()
+                Spike.drawAll()
+                Key.drawAll()
+                Lock.drawAll()
+                Checkpoint.drawAll()
+                Finish.drawAll()
+                Mail.drawAll()
+                Chocolate.drawAll()
 
-            Slime.drawAll()
-            Mushroom.drawAll()
-            IceGoblin.drawAll()
-            Rock.drawAll()
-            Player:draw()
-        Camera:unset()
-        
-        Snow:draw()
-        GUI:draw()
+                Slime.drawAll()
+                Mushroom.drawAll()
+                IceGoblin.drawAll()
+                Rock.drawAll()
+                Player:draw()
+            Camera:unset()
+            
+            Snow:draw()
+            GUI:draw()
+
+            if GUI.mailNum == 1 then
+                outro:draw()
+            end
         end
     end
 end
@@ -151,6 +163,7 @@ function LoadState:beginContact(a, b, collision)
     if Chocolate.beginContact(a, b, collision) then return end
     if Collider.beginContact(a, b, collision) then return end
     if Finish.beginContact(a, b, collision) then return end
+    if Mail.beginContact(a, b, collision) then return end
 
     FallingPlatform.beginContact(a, b, collision)
     Spike.beginContact(a, b, collision)

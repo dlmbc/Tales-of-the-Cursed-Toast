@@ -27,7 +27,7 @@ function love.load()
 		['load'] = function() return LoadState() end,
 		['ending'] = function() return EndingState() end
 	}
-	gStateMachine:change('logo-play')
+	gStateMachine:change('ending')
 
 	gSounds.aspire:play()
 	gSounds.aspire:setLooping(true)
@@ -61,7 +61,7 @@ function love.draw()
 
 	else
 		if (Map.currentLevel >= 1 and Map.currentLevel <= 8) or
-			(Map.currentLevel >= 13 and Map.currentLevel <= 16) then
+			(Map.currentLevel == 13) then
 			gStateMachine:render()
 		end
 
