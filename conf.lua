@@ -1,5 +1,6 @@
 function love.conf(t)
     t.console =  true
+    t.version = '11.3'
     t.window.title = 'Tales of the Cursed Toast' -- ste title sscreen
     t.window.icon = 'graphics/icon.png' -- set the icon
 
