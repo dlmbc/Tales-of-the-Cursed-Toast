@@ -3,19 +3,27 @@ local GUI = {}
 function GUI:load()
    self.key = {}
    self.hearts = {}
-   self.powerup = {}
+   self.powerup = {
+      chocolate = {},
+      strawBerry = {}
+   }
 
+   self.highlighted = 1
    self.isDisplay = false
+   self.isDisplayStrawBerry = false
    self.isDisplayChocolate = false
    self.keyNum = 0
    self.lockNum = 0
    self.flagNum = 0
    self.mailNum = 0
    self.chocoNum = 0
-   self.cheeseNum = 0
+   self.strawBerryNum = 0
 
-   self.powerup.x = 150
-   self.powerup.y = 5
+   self.powerup.chocolate.x = 150
+   self.powerup.chocolate.y = 5
+
+   self.powerup.strawBerry.x = 175
+   self.powerup.strawBerry.y = 5
 
    self.key.x = 100
    self.key.y = 5
@@ -55,16 +63,20 @@ end
 
 function GUI:displayPowerUps()
    if self.isDisplayChocolate == true then
-      love.graphics.draw(gTextures.chocolate, gFrames.chocolate[1], self.powerup.x, self.powerup.y)
+      love.graphics.draw(gTextures.chocolate, self.powerup.chocolate.x, self.powerup.chocolate.y)
    end
 
-   if Player.highlighted == 1 then
+   if self.isDisplayStrawBerry == true then
+      love.graphics.draw(gTextures.strawBerry, self.powerup.strawBerry.x, self.powerup.strawBerry.y)
+   end
+   
+   if self.highlighted == 1 then
       love.graphics.setColor(0.95, 0, 0, 1)
    end
       love.graphics.rectangle('line', 150, 5, 16, 16)
       love.graphics.setColor(1, 1, 1, 1)
 
-   if Player.highlighted == 2 then
+   if self.highlighted == 2 then
       love.graphics.setColor(0.78, 0, 0, 1)
    end
       love.graphics.rectangle('line', 175, 5, 16, 16)

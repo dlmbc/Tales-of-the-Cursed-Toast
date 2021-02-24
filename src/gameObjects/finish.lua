@@ -81,6 +81,7 @@ function Finish.beginContact(a, b, collision)
          if a == Player.character.fixture or b == Player.character.fixture then
             instance.toBeRemoved = true
             GUI.flagNum = 1
+            gSounds.nextLevel:play()
             return true
          end
       end

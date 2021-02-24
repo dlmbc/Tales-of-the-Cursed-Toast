@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 9,
-  nextobjectid = 103,
+  nextobjectid = 104,
   properties = {},
   tilesets = {
     {
@@ -354,7 +354,21 @@ return {
       offsetx = 0,
       offsety = 0,
       properties = {},
-      objects = {}
+      objects = {
+        {
+          id = 103,
+          name = "Straw Berry",
+          type = "strawberry",
+          shape = "rectangle",
+          x = 880,
+          y = 128,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     },
     {
       type = "objectgroup",

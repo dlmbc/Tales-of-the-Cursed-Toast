@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 6,
-  nextobjectid = 150,
+  nextobjectid = 153,
   properties = {},
   tilesets = {
     {
@@ -991,6 +991,19 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 152,
+          name = "Checkpoint",
+          type = "checkpoint",
+          shape = "rectangle",
+          x = 4944,
+          y = 112,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -1264,7 +1277,34 @@ return {
       offsetx = 0,
       offsety = 0,
       properties = {},
-      objects = {}
+      objects = {
+        {
+          id = 150,
+          name = "Chocolate",
+          type = "chocolate",
+          shape = "rectangle",
+          x = 736,
+          y = 64,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 151,
+          name = "Chocolate",
+          type = "chocolate",
+          shape = "rectangle",
+          x = 3104,
+          y = 64,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
     },
     {
       type = "objectgroup",

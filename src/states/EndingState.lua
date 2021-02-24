@@ -55,6 +55,8 @@ function EndingState:update(dt)
         Timer.tween(2, {
             [self] = {transitionAlpha = 1}
         }):finish(function()
+            GUI.mailNum = 0
+            gSounds.aspire:play()
             gStateMachine:change('title')
         end)
     end

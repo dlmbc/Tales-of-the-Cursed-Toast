@@ -39,6 +39,7 @@ _platform = 1
 
 -- power ups
 Chocolate = require 'src/powerups/chocolate'
+StrawBerry = require 'src/powerups/strawBerry'
 
 -- Particle Effect
 Snow = require 'src/snow'
@@ -85,6 +86,7 @@ gSounds = {
     wind = love.audio.newSource('sounds/SFX/wind.wav', 'static'),
     select = love.audio.newSource('sounds/SFX/Select.wav', 'static'),
     hit = love.audio.newSource('sounds/SFX/hit.wav', 'static'),
+    power_up = love.audio.newSource('sounds/SFX/Powerup.wav', 'static'),
     nextLevel = love.audio.newSource('sounds/SFX/levelup.wav', 'static')
 }
 
@@ -113,9 +115,11 @@ gTextures = {
     flag = love.graphics.newImage('graphics/flag.png'),
     checkpoint = love.graphics.newImage('graphics/checkpoint.png'),
     spike = love.graphics.newImage('graphics/spike.png'),
-    chocolate = love.graphics.newImage('graphics/chocolate.png'),
     platform = love.graphics.newImage('graphics/breakable.png'),
     mail = love.graphics.newImage('graphics/mail.png'),
+
+    chocolate = love.graphics.newImage('graphics/chocolate.png'),
+    strawBerry = love.graphics.newImage('graphics/strawberry.png'),
 
     snow = love.graphics.newImage('graphics/snow.png')
 }
@@ -133,7 +137,5 @@ gFrames = {
     rock = GenerateQuads(gTextures.rock, 16, 16),
 
     keyLock = GenerateQuads(gTextures.keyLock, 16, 16),
-    platform = GenerateQuads(gTextures.platform, 16, 8),
-
-    chocolate = GenerateQuads(gTextures.chocolate, 16, 16)
+    platform = GenerateQuads(gTextures.platform, 16, 8)
 }

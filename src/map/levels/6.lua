@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 7,
-  nextobjectid = 190,
+  nextobjectid = 192,
   properties = {},
   tilesets = {
     {
@@ -700,6 +700,32 @@ return {
           shape = "rectangle",
           x = 864,
           y = 192,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 190,
+          name = "Straw Berry",
+          type = "strawberry",
+          shape = "rectangle",
+          x = 4608,
+          y = 80,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 191,
+          name = "Chocolate",
+          type = "chocolate",
+          shape = "rectangle",
+          x = 6640,
+          y = 96,
           width = 16,
           height = 16,
           rotation = 0,

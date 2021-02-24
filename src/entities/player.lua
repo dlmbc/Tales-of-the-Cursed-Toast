@@ -22,8 +22,6 @@ function Player:load(x, y)
    self.gravity = 900
    self.jumpAmount = -300
 
-   self.highlighted = 1
-
    -- health bar
    self.health = {
       current = 3, 
@@ -88,6 +86,7 @@ function Player:takeDamage(amount)
    if self.isVulnerable == true then
       self:tintRed()
       if self.health.current - amount > 0 then
+         gSounds.hit:play()
          self.health.current = self.health.current - amount
       else
          self.health.current = 0
@@ -142,12 +141,12 @@ end
 
 function Player:selectPowerUp()
    if love.keyboard.wasPressed('l') then
-      self.highlighted = self.highlighted == 1 and 2 or 1
+      GUI.highlighted = GUI.highlighted == 1 and 2 or 1
    end
 
    if love.keyboard.wasPressed('k') then
-      if self.highlighted == 1 and GUI.isDisplayChocolate == true then
-         
+      if GUI.highlighted == 1 and GUI.isDisplayChocolate == true then
+         gSounds.power_up:play()
          GUI.isDisplayChocolate = false
          GUI.chocoNum = 0
          self.isVulnerable = false
@@ -158,8 +157,18 @@ function Player:selectPowerUp()
          if GUI.chocoNum == 0 then
             Map:spawnPowerups()
          end
-      elseif self.highlighted == 2 and GUI.cheeseNum == 1 then
-         print('cheese')
+
+      elseif GUI.highlighted == 2 and GUI.isDisplayStrawBerry == true then
+         gSounds.power_up:play()
+         GUI.isDisplayStrawBerry = false
+         GUI.strawBerryNum = 0
+         if self.health.current ~= self.health.max then
+            self.health.current = self.health.current + 1
+         end
+
+         if GUI.strawBerryNum == 0 then
+            Map:spawnPowerups()
+         end
       end
    end
 end

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="700" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="234">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="700" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="237">
  <editorsettings>
   <export target="../levels/7.lua" format="lua"/>
  </editorsettings>
@@ -115,8 +115,12 @@
   <object id="231" name="Enemy Collider" type="collider" x="5216" y="160" width="1" height="16"/>
   <object id="232" name="Enemy Collider" type="collider" x="5167" y="176" width="1" height="16"/>
   <object id="233" name="Enemy Collider" type="collider" x="5024" y="176" width="1" height="16"/>
+  <object id="236" name="Checkpoint" type="checkpoint" x="6288" y="176" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="6" name="powerup" visible="0"/>
+ <objectgroup id="6" name="powerup" visible="0">
+  <object id="234" name="Chocolate" type="chocolate" x="1952" y="80" width="16" height="16"/>
+  <object id="235" name="Straw Berry" type="strawberry" x="6608" y="176" width="16" height="16"/>
+ </objectgroup>
  <objectgroup color="#000000" id="3" name="solid" visible="0">
   <object id="1" x="0" y="144" width="48" height="80">
    <properties>

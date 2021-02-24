@@ -38,29 +38,18 @@ end
 function Map:backGround()
    if self.currentLevel >= 1 and self.currentLevel <= 4 then
       _platform = 1
-      gSounds.morningDew:play()
-      gSounds.morningDew:setLooping(true)
-      gSounds.morningDew:setVolume(0.75)
       return gTextures.forest
+
    elseif self.currentLevel >= 5 and self.currentLevel <= 8 then
       _platform = 2
-      gSounds.morningDew:stop()
-      gSounds.freezeOut:play()
-      gSounds.freezeOut:setLooping(true)
-      gSounds.freezeOut:setVolume(0.75)
       return gTextures.mountain
+
    elseif self.currentLevel >= 9 and self.currentLevel <= 12 then
       _platform = 3
-      gSounds.freezeOut:stop()
-      gSounds.illuminate:play()
-      gSounds.illuminate:setLooping(true)
-      gSounds.illuminate:setVolume(0.75)
       return gTextures.cave
+
    else
       _platform = 4
-      gSounds.illuminate:stop()
-      gSounds.hex:play()
-      gSounds.hex:setVolume(0.75)
       return gTextures.kitchen
    end
 end
@@ -134,6 +123,7 @@ function Map:clean()
    Finish.removeAll()
    Spike.removeAll()
    Chocolate.removeAll()
+   StrawBerry.removeAll()
    Collider.removeAll()
 end
 
@@ -224,6 +214,8 @@ function Map:spawnPowerups()
    for i,v in ipairs(self.powerupLayer.objects) do
 		if v.type == "chocolate" then
          Chocolate:load(v.x + v.width/2 , v.y)
+      elseif v.type == 'strawberry' then
+         StrawBerry:load(v.x + v.width/2 , v.y)
 		end
 	end
 end
