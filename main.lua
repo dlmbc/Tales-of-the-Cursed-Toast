@@ -21,13 +21,15 @@ function love.load()
 		['title'] = function() return TitleScreenState() end,
 		['settings'] = function() return SettingState() end,
 		['how-to-play'] = function() return HowToPlayState() end,
+		['how-to-play-2'] = function() return HowToPlayState2() end,
+		['how-to-play-3'] = function() return HowToPlayState3() end,
 		['play'] = function() return PlayState() end,
 		['credits'] = function() return CreditState() end,
 		['logo-play'] = function() return StartState() end,
 		['load'] = function() return LoadState() end,
 		['ending'] = function() return EndingState() end
 	}
-	gStateMachine:change('logo-play')
+	gStateMachine:change('title')
 
 	gSounds.aspire:play()
 	gSounds.aspire:setLooping(true)

@@ -38,12 +38,16 @@ function Snow:update(dt)
         self.wind = -7
     end
 
-    if self.wind < 0 then
-        self.howl:play()
-        self.howl:setVolume(0.05)
-        self.howl:setPitch(2)
+    if SFX_play == true then
+        if self.wind < 0 then
+            self.howl:play()
+            self.howl:setVolume(0.05)
+            self.howl:setPitch(2)
+        else
+            self.howl:pause()
+        end
     else
-        self.howl:pause()
+        self.howl:stop()
     end
 
     self.snow:setDirection(math.pi/2 - self.wind/10)

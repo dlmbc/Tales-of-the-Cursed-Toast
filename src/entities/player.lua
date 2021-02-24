@@ -86,7 +86,12 @@ function Player:takeDamage(amount)
    if self.isVulnerable == true then
       self:tintRed()
       if self.health.current - amount > 0 then
-         gSounds.hit:play()
+         if SFX_play == true then
+            gSounds.hit:play()
+         else
+            gSounds.hit:stop()
+         end
+
          self.health.current = self.health.current - amount
       else
          self.health.current = 0
@@ -146,7 +151,12 @@ function Player:selectPowerUp()
 
    if love.keyboard.wasPressed('k') then
       if GUI.highlighted == 1 and GUI.isDisplayChocolate == true then
-         gSounds.power_up:play()
+         if SFX_play == true then
+            gSounds.power_up:play()
+         else
+            gSounds.power_up:stop()
+         end
+
          GUI.isDisplayChocolate = false
          GUI.chocoNum = 0
          self.isVulnerable = false
@@ -159,7 +169,12 @@ function Player:selectPowerUp()
          end
 
       elseif GUI.highlighted == 2 and GUI.isDisplayStrawBerry == true then
-         gSounds.power_up:play()
+         if SFX_play == true then
+            gSounds.power_up:play()
+         else
+            gSounds.power_up:stop()
+         end
+
          GUI.isDisplayStrawBerry = false
          GUI.strawBerryNum = 0
          if self.health.current ~= self.health.max then
@@ -271,11 +286,20 @@ function Player:jump()
       if self.grounded or self.graceTime > 0 then
          self.dy = self.jumpAmount
          self.graceTime = 0
-         gSounds.jump:play()
+         if SFX_play == true then
+            gSounds.jump:play()
+         else
+            gSounds.jump:stop()
+         end
+
       elseif self.hasDoubleJump then
          self.hasDoubleJump = false
          self.dy = self.jumpAmount * 0.8
-         gSounds.jump:play()
+         if SFX_play == true then
+            gSounds.jump:play()
+         else
+            gSounds.jump:stop()
+         end
       end
    end
 end

@@ -19,7 +19,12 @@ end
 
 function TitleScreenState:update(dt)
     if love.keyboard.wasPressed('s') then
-        gSounds.select:play()
+        if SFX_play == true then
+            gSounds.select:play()
+         else
+            gSounds.select:stop()
+         end
+
         gSounds.select:setVolume(0.5)
         highlighted = highlighted + 1
         if highlighted > 6 then
@@ -27,7 +32,12 @@ function TitleScreenState:update(dt)
         end
 
     elseif love.keyboard.wasPressed('w') then
-        gSounds.select:play()
+        if SFX_play == true then
+            gSounds.select:play()
+        else
+            gSounds.select:stop()
+        end
+
         gSounds.select:setVolume(0.5)
         highlighted = highlighted - 1
         if highlighted < 1 then

@@ -34,6 +34,11 @@ function PlayState:update(dt)
 
         if (love.keyboard.wasPressed('d') or love.keyboard.wasPressed('a')) and highlighted == 1 then
             sfxNext = sfxNext == 1 and 2 or 1
+            if sfxNext == 1 then
+                SFX_play = true
+            else
+                SFX_play = false
+            end
         end
 
         if (love.keyboard.wasPressed('d') or love.keyboard.wasPressed('a')) and highlighted == 2 then
@@ -102,6 +107,7 @@ function PlayState:update(dt)
 
             elseif highlighted == 5 then
                 gStateMachine:change('title')
+                Snow.howl:stop()
                 highlighted = 1
                 gSounds.aspire:play()
             end
@@ -145,7 +151,7 @@ function PlayState:update(dt)
                 gSounds.illuminate:stop()
                 gSounds.hex:stop()
             end
-            
+
             World:update(dt)
 
             Player:update(dt)
@@ -192,7 +198,7 @@ function PlayState:render()
                 love.graphics.draw(gTextures.arrow, gFrames.arrow[1], 175, 80)
                 love.graphics.draw(gTextures.arrow, gFrames.arrow[2], 215, 80)
             end
-                if sfxNext == 1 then
+                if SFX_play == true then
                     love.graphics.printf('ON', 125, 75, 145, 'center')
                 else
                     love.graphics.printf('OFF', 125, 75, 145, 'center')
