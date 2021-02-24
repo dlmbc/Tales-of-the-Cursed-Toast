@@ -39,7 +39,7 @@ _platform = 1
 
 -- power ups
 Chocolate = require 'src/powerups/chocolate'
-StrawBerry = require 'src/powerups/strawBerry'
+StrawBerry = require 'src/powerups/strawberry'
 
 -- Particle Effect
 Snow = require 'src/snow'
