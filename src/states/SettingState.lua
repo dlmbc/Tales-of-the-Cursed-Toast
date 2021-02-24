@@ -51,8 +51,10 @@ function SettingState:update(dt)
         bgmNext = bgmNext == 1 and 2 or 1
         if bgmNext == 1 then
             BGM_play = true
+            gSounds.aspire:play()
 
         elseif bgmNext == 2 then
+            BGM_play = false
             gSounds.aspire:stop()
         end
     end

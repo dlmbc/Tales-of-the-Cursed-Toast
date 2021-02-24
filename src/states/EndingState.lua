@@ -47,7 +47,11 @@ function EndingState:update(dt)
         }):finish(function()
             gStateMachine:change('title')
             GUI.mailNum = 0
-            gSounds.aspire:play()
+            if BGM_play == true then
+                gSounds.aspire:play()
+            else
+                gSounds.aspire:stop()
+            end
         end)
     end
 
@@ -56,7 +60,11 @@ function EndingState:update(dt)
             [self] = {transitionAlpha = 1}
         }):finish(function()
             GUI.mailNum = 0
-            gSounds.aspire:play()
+            if BGM_play == true then
+                gSounds.aspire:play()
+            else
+                gSounds.aspire:stop()
+            end
             gStateMachine:change('title')
         end)
     end
